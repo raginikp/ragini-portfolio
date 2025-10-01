@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block title %}My Reading List{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h1 class="display-4 fw-bold">My Reading List</h1>
+            <p class="lead text-muted">A collection of books I've read and loved</p>
+        </div>
+        
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            {% for book in books %}
+            <div class="col" data-aos="fade-up" data-aos-delay="{{ loop.index * 50 }}">
+                <div class="card h-100 shadow-sm book-card">
+                    <a href="{{ url_for('book_detail', book_id=book.id) }}" class="text-decoration-none text-dark">
+                        <div class="position-relative" style="min-height: 300px; background-color: #f8f9fa;">
+                            <img 
+                                src="{{ book.cover_image }}" 
+                                class="card-img-top w-100 h-100" 
+                                alt="{{ book.title }}"
+                                loading="lazy"
+                                onerror="this.onerror=null; this.src='{{ book.fallback_image }}'"
+                                style="object-fit: contain; padding: 1rem;"
+                            >
+                            <div class="position-absolute top-0 end-0 p-2">
+                                <span class="badge bg-{{ 'success' if book.status == 'read' else 'warning' if book.status == 'reading' else 'secondary' }}">
+                                    {{ book.status|title }}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ book.title }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">{{ book.author }}</h6>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <div class="rating">
+                                    {% for i in range(book.rating|int) %}
+                                        <i class="fas fa-star text-warning"></i>
+                                    {% endfor %}
+                                    {% if book.rating % 1 != 0 %}
+                                        <i class="fas fa-star-half-alt text-warning"></i>
+                                        {% set empty_stars = 5 - book.rating|int - 1 %}
+                                    {% else %}
+                                        {% set empty_stars = 5 - book.rating|int %}
+                                    {% endif %}
+                                    {% for i in range(empty_stars) %}
+                                        <i class="far fa-star text-warning"></i>
+                                    {% endfor %}
+                                </div>
+                                <small class="text-muted">{{ book.pages }} pages</small>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="card-footer bg-transparent">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="badge bg-light text-dark">{{ book.genre }}</span>
+                            <small class="text-muted">Finished: {{ book.finish_date }}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="text-center mt-5">
+            <a href="#" class="btn btn-outline-primary">View More Books</a>
+        </div>
+        
+        <div class="text-center mt-5">
+            <a href="{{ url_for('home') }}" class="btn btn-outline-primary">
+                <i class="fas fa-arrow-left me-2"></i>Back to Home
+            </a>
+        </div>
+    </div>
+</section>
+
+<style>
+    .book-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: none;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+    
+    .book-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+    }
+    
+    .card-img-top {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    
+    .rating {
+        font-size: 0.9rem;
+    }
+    
+    .badge {
+        font-weight: 500;
+        padding: 0.35em 0.65em;
+    }
+</style>
+{% endblock %}

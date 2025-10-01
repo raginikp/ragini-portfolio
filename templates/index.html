@@ -1,0 +1,1231 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<style>
+    :root {
+        /* Light theme (default) */
+        --bg-light: #F3EEE9;    /* Very light cream */
+        --header-footer: #E1D3CA; /* Soft beige */
+        --primary: #C4737C;     /* Muted rose pink */
+        --secondary: #DFA0F3;   /* Pastel lavender */
+        --text-dark: #1C1C1C;   /* Strong contrast */
+        --text-soft: #4A4A4A;   /* Gentle gray */
+        --accent: #DFA0F3;      /* Pastel lavender for accents */
+        --card-bg: #ffffff;     /* White background for cards */
+        --skill-card-bg: #f8f9fa; /* White background for skill cards */
+        --timeline-bg: #ffffff;  /* White background for timeline */
+        --timeline-border: #e9ecef; /* Light border for timeline */
+    }
+    
+    /* Dark theme overrides */
+    [data-bs-theme="dark"] {
+        --bg-light: #121212;    /* Dark background */
+        --header-footer: #1E1E1E; /* Slightly lighter dark for header/footer */
+        --primary: #E57373;     /* Lighter rose pink for better contrast */
+        --secondary: #BA68C8;   /* Brighter lavender */
+        --text-dark: #E0E0E0;   /* Light text for dark background */
+        --text-soft: #B0B0B0;   /* Softer light text */
+        --accent: #BA68C8;      /* Brighter accent */
+        --card-bg: #1E1E1E;     /* Dark background for cards */
+        --skill-card-bg: #1E1E1E; /* Dark background for skill cards */
+        --timeline-bg: #1E1E1E;  /* Dark background for timeline */
+        --timeline-border: #333; /* Darker border for timeline */
+    }
+    
+    /* Apply smooth transitions for theme changes */
+    body, .card, .skill-card, .timeline-item, .form-control, .form-select, .btn {
+        transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+    }
+    
+    body {
+        background-color: var(--bg-light);
+        color: var(--text-dark);
+        transition: all 0.3s ease;
+        position: relative;
+    }
+    .hero-section {
+        background-color: var(--bg-light);
+        position: relative;
+        z-index: 3;
+    }
+    
+    /* Section styling */
+    section:not(.hero-section) {
+        position: relative;
+        z-index: 2;
+        background: var(--bg-light);
+        padding: 5rem 0;
+    }
+    
+    /* Hero section specific styling */
+    .hero-section {
+        background-color: var(--bg-light);
+        position: relative;
+        z-index: 3;
+    }
+    
+    #about {
+        position: relative;
+    }
+    
+    #about > .container {
+        position: relative;
+        z-index: 1;
+    }
+    
+    /* Navigation */
+    .navbar {
+        background-color: var(--header-footer) !important;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+    
+    .navbar-brand, .nav-link {
+        color: var(--text-soft) !important;
+    }
+    
+    .nav-link:hover {
+        color: var(--primary) !important;
+    }
+    
+    /* Buttons */
+    .btn-primary {
+        background-color: var(--primary);
+        border-color: var(--primary);
+        color: white;
+    }
+    
+    .btn-primary:hover {
+        background-color: #b35d65;
+        border-color: #b35d65;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(196, 115, 124, 0.4) !important;
+    }
+    
+    .btn-outline-primary {
+        color: var(--primary);
+        border-color: var(--primary);
+    }
+    
+    .btn-outline-primary:hover {
+        background-color: var(--primary);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(196, 115, 124, 0.2);
+    }
+    
+    .text-primary {
+        color: var(--primary) !important;
+    }
+    
+    /* Cards */
+    .card {
+        background-color: var(--card-bg);
+        border: 1px solid var(--timeline-border);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+    }
+    
+    /* Footer */
+    .footer {
+        background-color: var(--header-footer);
+        color: var(--text-soft);
+    }
+    
+    /* Skill cards */
+    .skill-card {
+        background: var(--card-bg);
+        transition: all 0.3s ease;
+        height: 100%;
+        padding: 1rem 0;
+    }
+    
+    .skill-card:hover {
+        transform: translateY(-3px);
+        font-weight: 600;
+    }
+    
+    .skill-icon a {
+        color: var(--primary);
+        transition: all 0.3s ease;
+    }
+    
+    .skill-icon i {
+        font-size: 2.5rem;
+    }
+    
+    /* Navigation pills */
+    .nav-pills .nav-link {
+        color: var(--text-soft);
+    }
+    
+    .nav-pills .nav-link.active {
+        background: var(--primary);
+        color: white;
+    }
+    
+    .nav-pills .nav-link:not(.active):hover {
+        background: var(--accent);
+        color: var(--text-dark);
+    }
+    
+    .skill-icon a {
+        color: #ffffff;
+        transition: all 0.3s ease;
+    }
+    
+    /* Contact form */
+    .contact-section .contact-form input:focus, 
+    .contact-section .contact-form textarea:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 0.2rem rgba(196, 115, 124, 0.15);
+    }
+    
+    .contact-section .contact-form button[type="submit"] {
+        background-color: var(--primary);
+        border-color: var(--primary);
+    }
+    
+    .contact-section .contact-form button[type="submit"]:hover {
+        background-color: var(--accent);
+        border-color: var(--accent);
+    }
+    
+    /* Hover effects */
+    a:not(.nav-link):hover {
+        color: var(--primary) !important;
+    }
+    
+    .hobbies-section,
+    .contact-section {
+        background-color: var(--bg-light);
+    }
+    .graduation-badge {
+        position: absolute;
+        top: 0;
+        right: 0;
+        transform: translateY(-50%);
+    }
+    
+    .graduation-badge a {
+        text-decoration: none;
+        color: var(--primary);
+    }
+    
+    .graduation-badge a:hover {
+        color: var(--secondary);
+    }
+    
+    .travel-emoji {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+    
+    .travel-card {
+        background-color: #ffffff;
+        border: 1px solid rgba(0, 0, 0, 0.125);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .travel-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    }
+    
+    .hobbies-section {
+        background-color: var(--bg-light);
+    }
+    
+    .hobbies-section .card {
+        background-color: #ffffff;
+        border: 1px solid rgba(0, 0, 0, 0.125);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .hobbies-section .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    }
+    
+    .contact-section {
+        background-color: var(--bg-light);
+    }
+    
+    .contact-section .card {
+        background-color: #ffffff;
+        border: 1px solid rgba(0, 0, 0, 0.125);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .contact-section .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    }
+    
+    .contact-section .contact-info {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        backdrop-filter: blur(10px);
+        padding: 2rem;
+        border-radius: 8px;
+        height: 100%;
+    }
+    
+    .contact-section .contact-info h3 {
+        color: #ffffff;
+    }
+    
+    .contact-section .contact-info p {
+        color: rgba(255, 255, 255, 0.9);
+    }
+    
+    .contact-section .contact-form {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        backdrop-filter: blur(10px);
+    }
+    
+    .contact-section .contact-form:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    }
+    
+    .contact-section .contact-form input, .contact-section .contact-form textarea {
+        border: 1px solid rgba(0, 0, 0, 0.125);
+    }
+    
+    .contact-section .contact-form input:focus, .contact-section .contact-form textarea:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 0.2rem rgba(196, 115, 124, 0.25);
+    }
+    
+    .contact-section .contact-form button[type="submit"] {
+        background-color: var(--secondary);
+        border-color: var(--secondary);
+        color: var(--text-light);
+    }
+    
+    .contact-section .contact-form button[type="submit"]:hover {
+        background-color: var(--accent);
+        border-color: var(--accent);
+        color: var(--text-dark);
+    }
+    
+    /* Places Traveled Section */
+    #travel {
+        background-color: var(--bg-light);
+        padding: 5rem 0;
+    }
+    
+    .travel-card {
+        background: var(--card-bg);
+        border: 1px solid var(--timeline-border);
+        border-radius: 8px;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        height: 100%;
+    }
+    
+    .travel-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    
+    .travel-card .card-body {
+        padding: 1.5rem;
+    }
+    
+    .travel-card .card-title {
+        color: var(--primary);
+        margin-bottom: 0.5rem;
+    }
+    
+    .travel-card .card-text {
+        color: var(--text-soft);
+        margin-bottom: 1rem;
+    }
+    
+    /* Technical Skills Section */
+    #skills {
+        background-color: var(--bg-light);
+        padding: 5rem 0 2rem 0;
+        color: var(--text-dark);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    /* Skills section specific pattern (slightly more prominent) */
+    
+    
+    #skills .container {
+        position: relative;
+        z-index: 1;
+    }
+    
+    #skills .nav-pills {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 0.75rem;
+        border-radius: 50px;
+        margin: 0 auto 2.5rem;
+        max-width: 600px;
+    }
+    
+    #skills .nav-link {
+        color: var(--text-dark);
+        font-weight: 500;
+        padding: 0.5rem 1.25rem;
+        border-radius: 50px;
+        margin: 0.15rem;
+        transition: all 0.3s ease;
+    }
+    
+    #skills .nav-link.active {
+        background: var(--primary);
+        color: white !important;
+        box-shadow: 0 4px 15px rgba(196, 115, 124, 0.3);
+    }
+    
+    #skills .nav-link:not(.active):hover {
+        background: rgba(255, 255, 255, 0.2);
+        color: var(--text-dark);
+    }
+    
+    #skills .skill-card {
+        background: var(--card-bg);
+        border: 1px solid var(--timeline-border);
+        border-radius: 8px;
+        padding: 1.5rem;
+        height: 100%;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+    
+    #skills .skill-card h5 {
+        color: var(--text-dark);
+        margin: 1rem 0 0;
+        font-weight: 600;
+    }
+    
+    #skills .skill-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        border-color: var(--primary);
+    }
+    
+    #skills .skill-icon {
+        margin-bottom: 1rem;
+        display: inline-block;
+        background: none !important;
+        padding: 0;
+    }
+    
+    #skills .skill-icon i {
+        font-size: 2.5rem;
+    }
+    
+    #skills .tab-content {
+        background: rgba(255, 255, 255, 0.85) !important;
+        backdrop-filter: blur(8px);
+        border-radius: 12px !important;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
+        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        overflow: hidden;
+        position: relative;
+        z-index: 2;
+    }
+    
+    [data-bs-theme="dark"] #skills .tab-content {
+        background: rgba(30, 30, 30, 0.85) !important;
+        border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    }
+    
+    [data-bs-theme="dark"] #skills .tab-content {
+        background: rgba(30, 30, 30, 0.8) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    }
+    
+    #skills .skill-icon a {
+        color: var(--primary);
+        transition: all 0.3s ease;
+        background: none !important;
+        box-shadow: none !important;
+    }
+    
+    #skills .skill-card:hover .skill-icon a {
+        transform: scale(1.1);
+        background: none !important;
+    }
+    
+    #skills .tab-content {
+        background: transparent !important;
+        border: none !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+    }
+    
+    /* Contact Section */
+    #contact {
+        padding: 5rem 0;
+        background-color: var(--bg-light);
+    }
+    
+    .contact-info {
+        margin-bottom: 3rem;
+    }
+    
+    .contact-info h3 {
+        color: var(--primary);
+        margin-bottom: 1.5rem;
+    }
+    
+    .contact-info p {
+        color: var(--text-soft);
+        margin-bottom: 1.5rem;
+    }
+    
+    .contact-details {
+        margin-top: 2rem;
+    }
+    
+    .contact-item {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 1rem;
+    }
+    
+    .contact-item i {
+        width: 40px;
+        height: 40px;
+        background-color: var(--primary);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 1rem;
+        transition: all 0.3s ease;
+    }
+    
+    .contact-item:hover i {
+        background-color: var(--secondary);
+        transform: translateY(-3px);
+    }
+    
+    .contact-text h4 {
+        margin: 0;
+        color: var(--text-dark);
+        font-size: 1rem;
+    }
+    
+    .contact-text a, .contact-text span {
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+    
+    .contact-text a:hover {
+        color: var(--primary);
+    }
+    
+    /* Form Styles */
+    .form-control {
+        background-color: var(--card-bg);
+        border: 1px solid var(--timeline-border);
+        color: var(--text-dark);
+        padding: 0.75rem 1rem;
+        border-radius: 6px;
+        margin-bottom: 1.5rem;
+        transition: all 0.3s ease;
+    }
+    
+    .form-control:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 0.2rem rgba(196, 115, 124, 0.25);
+    }
+    
+    textarea.form-control {
+        min-height: 150px;
+        resize: vertical;
+    }
+    
+    .form-label {
+        color: var(--text-dark);
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+    }
+    
+    /* Submit Button */
+    .btn-send {
+        background-color: var(--primary);
+        color: white;
+        padding: 0.75rem 2rem;
+        border: none;
+        border-radius: 6px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-send:hover {
+        background-color: var(--secondary);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    /* Contact Section Styling */
+    .contact-section {
+        background-color: var(--bg-light);
+        color: var(--text-dark);
+    }
+    
+    .contact-heading {
+        color: var(--primary) !important;
+        margin-bottom: 1.5rem;
+        font-size: 1.75rem;
+    }
+    
+    .contact-description {
+        color: var(--text-soft);
+        line-height: 1.7;
+        margin-bottom: 2rem;
+        font-size: 1.1rem;
+    }
+    
+    .contact-item {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 1.5rem;
+    }
+    
+    .contact-item i {
+        color: var(--primary);
+        font-size: 1.25rem;
+        margin-right: 1rem;
+        margin-top: 0.25rem;
+    }
+    
+    .contact-text h4 {
+        color: var(--text-dark);
+        margin-bottom: 0.25rem;
+        font-size: 1.1rem;
+    }
+    
+    .contact-link {
+        color: var(--primary) !important;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-weight: 500;
+    }
+    
+    .contact-link:hover {
+        color: var(--accent) !important;
+        text-decoration: underline;
+    }
+    
+    .location-text {
+        color: var(--text-soft) !important;
+        font-size: 1rem;
+    }
+    
+    /* Ensure form text is visible */
+    .contact-form h3 {
+        color: var(--text-dark) !important;
+    }
+    
+    .form-label {
+        color: var(--text-dark) !important;
+        font-weight: 500;
+    }
+    
+    .form-control {
+        background-color: var(--card-bg) !important;
+        color: var(--text-dark) !important;
+        border: 1px solid var(--timeline-border);
+    }
+    
+    .form-control:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 0.25rem rgba(196, 115, 124, 0.25);
+    }
+    
+    .profile-image-container {
+        position: relative;
+        width: 300px;
+        height: 300px;
+        border-radius: 50%;
+        padding: 5px;
+        background: linear-gradient(45deg, var(--primary), var(--accent));
+        box-shadow: 0 0 15px rgba(196, 115, 124, 0.6);
+    }
+    
+    .profile-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 3px solid white;
+    }
+    
+    .graduation-cap {
+        position: absolute;
+        right: 15px;
+        bottom: 15px;
+        background: white;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        z-index: 2;
+    }
+    
+    .graduation-cap i {
+        font-size: 1.5rem;
+        color: var(--primary);
+    }
+    
+    .profile-hover:hover {
+        transform: scale(1.03);
+        box-shadow: 0 0 20px rgba(196, 115, 124, 0.5) !important;
+    }
+    
+    .profile-hover:hover + .graduation-cap {
+        transform: scale(1.1) translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    
+    .graduation-cap:hover {
+        transform: scale(1.1) translateY(-5px) !important;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2) !important;
+    }
+    
+    /* Contact Section Styling */
+    .contact-section .container {
+        padding: 2rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        margin: 2rem auto;
+        max-width: 1200px;
+        height: 100%;
+    }
+    
+    .contact-heading {
+        color: var(--primary) !important;
+        margin-bottom: 1.5rem;
+        font-size: 1.75rem;
+    }
+    
+    .contact-description {
+        color: var(--text-soft);
+        line-height: 1.7;
+        margin-bottom: 2rem;
+        font-size: 1.1rem;
+    }
+    
+    .contact-item {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 1.5rem;
+    }
+    
+    .contact-item i {
+        color: var(--primary);
+        font-size: 1.25rem;
+        margin-right: 1rem;
+        margin-top: 0.25rem;
+    }
+    
+    .contact-text h4 {
+        color: var(--text-dark);
+        margin-bottom: 0.25rem;
+        font-size: 1.1rem;
+    }
+    
+    .contact-link {
+        color: var(--primary) !important;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-weight: 500;
+    }
+    
+    .contact-link:hover {
+        color: var(--accent) !important;
+        text-decoration: underline;
+    }
+    
+    .location-text {
+        color: var(--text-soft) !important;
+        font-size: 1rem;
+    }
+    
+    /* Form Styling */
+    .contact-form {
+        background: var(--card-bg);
+        padding: 2rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        height: 100%;
+    }
+    
+    .contact-form h3 {
+        color: var(--text-dark) !important;
+        margin-bottom: 1.5rem;
+    }
+    
+    .form-label {
+        color: var(--text-dark) !important;
+        font-weight: 500;
+    }
+    
+    .form-control {
+        background-color: var(--card-bg) !important;
+        color: var(--text-dark) !important;
+        border: 1px solid var(--timeline-border);
+    }
+    
+    .form-control:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 0.25rem rgba(196, 115, 124, 0.25);
+    }
+    
+    /* Ensure text in form controls is visible in dark mode */
+    [data-bs-theme="dark"] .form-control::placeholder {
+        color: var(--text-soft) !important;
+        opacity: 0.7;
+    }
+    
+    [data-bs-theme="dark"] .form-control:focus {
+        background-color: var(--card-bg) !important;
+        color: var(--text-dark) !important;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section id="home" class="hero-section d-flex align-items-center py-5 position-relative overflow-hidden">
+    <!-- Rose Animation Background -->
+    <div class="rose-animation">
+        <div class="rose-petal" style="width: 300px; height: 300px; top: 15%; left: 10%; animation-delay: 0s;"></div>
+        <div class="rose-petal" style="width: 250px; height: 250px; top: 60%; left: 15%; animation-delay: 3s;"></div>
+        <div class="rose-petal" style="width: 350px; height: 350px; top: 20%; right: 10%; animation-delay: 2s;"></div>
+        <div class="rose-petal" style="width: 200px; height: 200px; bottom: 10%; right: 20%; animation-delay: 4s;"></div>
+        <div class="rose-petal" style="width: 280px; height: 280px; bottom: 20%; left: 25%; animation-delay: 1s;"></div>
+    </div>
+    
+    <div class="container py-5 position-relative" style="z-index: 2;">
+        <div class="row align-items-center">
+            <div class="col-lg-6" data-aos="fade-right">
+                <h1 class="display-4 fw-bold mb-3">
+                    Hello, I'm <span class="name-animate">{{ data.name }}</span>
+                </h1>
+                <!-- <h2 class="text-muted mb-4">{{ data.title }}</h2> -->
+                <p class="lead mb-4">A passionate developer creating innovative solutions and exploring new technologies.</p>
+                <div class="d-flex flex-wrap gap-3">
+                    <a href="#contact" class="btn btn-primary btn-lg px-4 py-2" style="background-color: var(--primary); border-color: var(--primary); color: white; font-weight: 500; transition: all 0.3s ease; box-shadow: 0 2px 10px rgba(196, 115, 124, 0.3);">
+                        <i class="fas fa-envelope me-2"></i>Contact Me
+                    </a>
+                    <a href="{{ data.resume }}" class="btn btn-outline-primary btn-lg px-4 py-2" target="_blank" style="border-color: var(--primary); color: var(--primary); font-weight: 500; transition: all 0.3s ease;">
+                        <i class="fas fa-file-alt me-2"></i>View Resume
+                    </a>
+                </div>
+                <div class="social-links mt-4">
+                    <a href="{{ data.github }}" target="_blank" class="text-muted me-3">
+                        <i class="fab fa-github fa-lg"></i>
+                    </a>
+                    <a href="{{ data.linkedin }}" target="_blank" class="text-muted me-3">
+                        <i class="fab fa-linkedin-in fa-lg"></i>
+                    </a>
+                    <a href="mailto:{{ data.email }}" class="text-muted me-3">
+                        <i class="fas fa-envelope fa-lg"></i>
+                    </a>
+                    <span class="secret-message" style="display: inline-block; vertical-align: middle;">
+                        <i class="fas fa-lock fa-lg" style="color: var(--primary);"></i>
+                        <span class="secret-text">This site has many secrets - feel free to explore and discover them all!</span>
+                    </span>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center mt-5 mt-lg-0" data-aos="fade-left">
+                <div class="position-relative d-inline-block">
+                    <div class="profile-image-container">
+                        <img src="{{ url_for('static', filename='images/profile.jpg') }}" 
+                             alt="{{ data.name }}" 
+                             class="img-fluid rounded-circle profile-hover"
+                             style="width: 300px; height: 300px; object-fit: cover; border: 5px solid white; box-shadow: 0 0 0 5px var(--primary); transition: all 0.3s ease;">
+                    </div>
+                    <div class="graduation-cap" style="right: 20px; bottom: 20px; background: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); position: absolute; transition: all 0.3s ease;">
+                        <i class="fas fa-graduation-cap" style="color: var(--primary); font-size: 1.5rem; transition: all 0.3s ease;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- About Section -->
+<section id="about" class="py-5 bg-light">
+    <div class="container py-5">
+        <h2 class="text-center mb-5 display-5 fw-bold">About Me</h2>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <i class="fas fa-heart text-danger me-2"></i>A Little About Me
+                        </h5>
+                        <p class="card-text">{{ data.about }}</p>
+                        <p class="card-text">
+                            When I'm not coding, you can find me exploring new places, capturing moments 
+                            through photography, or reading about the latest tech trends and novels. I believe in 
+                            continuous learning and pushing boundaries.
+                        </p>
+                        <div class="d-flex align-items-center text-muted">
+                            <i class="fas fa-map-marker-alt me-2"></i>
+                            <span>{{ data.location }}</span>
+                        </div>
+                        
+                        <div class="mt-4 text-center">
+                            <div class="d-flex flex-wrap justify-content-center gap-3">
+                                <a href="{{ url_for('education') }}" class="btn btn-primary">
+                                    <i class="fas fa-graduation-cap me-2"></i>My Education
+                                </a>
+                                <a href="{{ url_for('college_fest') }}" class="btn btn-outline-primary">
+                                    <i class="fas fa-images me-2"></i>College Memories
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Skills Section -->
+<section id="skills" class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center">
+            <span class="text-primary fw-bold d-block mb-2">My Expertise</span>
+            <h2 class="display-5 fw-bold">
+                <i class="fas fa-code text-primary me-2"></i>Technical Skills
+            </h2>
+            <p class="text-muted mb-5">Technologies I've been working with recently</p>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <!-- Tab Navigation -->
+                <ul class="nav nav-pills nav-justified flex-column flex-sm-row mb-4" id="skillsTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="languages-tab" data-bs-toggle="pill" 
+                                data-bs-target="#languages" type="button" role="tab" aria-controls="languages" 
+                                aria-selected="true">
+                            <i class="fas fa-code me-2"></i>Languages
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="frameworks-tab" data-bs-toggle="pill" 
+                                data-bs-target="#frameworks" type="button" role="tab" aria-controls="frameworks" 
+                                aria-selected="false">
+                            <i class="fas fa-layer-group me-2"></i>Frameworks
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="tools-tab" data-bs-toggle="pill" 
+                                data-bs-target="#tools" type="button" role="tab" aria-controls="tools" 
+                                aria-selected="false">
+                            <i class="fas fa-tools me-2"></i>Tools
+                        </button>
+                    </li>
+                </ul>
+                
+                <!-- Tab Content -->
+                <div class="tab-content" id="skillsTabContent">
+                    {% for category, skills in data.skills.items() %}
+                    {% if category != 'databases' %}
+                    <div class="tab-pane fade {% if loop.first %}show active{% endif %}" 
+                         id="{{ category }}" role="tabpanel" aria-labelledby="{{ category }}-tab">
+                        <div class="row g-4">
+                            {% for skill in skills %}
+                            <div class="col-6 col-md-4 col-lg-3">
+                                <div class="skill-card text-center p-4 h-100" data-aos="fade-up" data-aos-delay="{{ loop.index * 50 }}">
+                                    <div class="skill-icon mb-3">
+                                        <a href="{{ skill.wikipedia }}" target="_blank" rel="noopener noreferrer" 
+                                           data-bs-toggle="tooltip" data-bs-placement="top" title="Learn more about {{ skill.name }} on Wikipedia">
+                                            <i class="{{ skill.icon }} fa-3x text-primary"></i>
+                                        </a>
+                                    </div>
+                                    <h5 class="mb-0">{{ skill.name }}</h5>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Projects Section -->
+<section id="projects" class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5 display-5 fw-bold">Featured Projects</h2>
+        <div class="row">
+            {% for project in data.projects %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100 shadow-sm project-card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ project.title }}</h5>
+                        <p class="card-text">{{ project.description }}</p>
+                        <div class="mb-3">
+                            {% for tech in project.tech %}
+                            <span class="badge bg-secondary me-1 mb-1">{{ tech }}</span>
+                            {% endfor %}
+                        </div>
+                        <div class="d-flex gap-2">
+                            <a href="{{ project.github }}" target="_blank" class="btn btn-outline-primary btn-sm">
+                                <i class="fab fa-github me-1"></i>Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Travel Section -->
+<section id="travel" class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center">
+            <span class="text-primary fw-bold d-block mb-2">My Adventures</span>
+            <h2 class="display-5 fw-bold">
+                <i class="fas fa-plane text-primary me-2"></i>Places I've Traveled
+            </h2>
+            <p class="text-muted mb-5">Exploring new destinations and experiencing different cultures</p>
+        </div>
+        
+        <div class="row g-4">
+            {% for place in data.travel_places %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border-0 shadow-sm hover-lift">
+                    <div class="card-body text-center p-4">
+                        <div class="icon-shape icon-shape-primary rounded-4 mb-4 d-inline-flex">
+                            <div style="font-size: 2rem;">{{ place.emoji }}</div>
+                        </div>
+                        <h3 class="h5 mb-2">{{ place.name }}</h3>
+                        <p class="text-muted mb-0">{{ place.description }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Hobbies Section -->
+<section id="hobbies" class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center">
+            <span class="text-primary fw-bold d-block mb-2">My Interests</span>
+            <h2 class="display-5 fw-bold">
+                <i class="fas fa-heart text-primary me-2"></i>Hobbies & Interests
+            </h2>
+            <p class="text-muted mb-5">A few things I enjoy when I'm not coding</p>
+        </div>
+        
+        <div class="row g-4">
+            {% for hobby in data.hobbies %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border-0 shadow-sm hover-lift {% if hobby.name == 'Reading' %}reading-hobby-card{% endif %}" 
+                     {% if hobby.name == 'Reading' %}data-hobby="Reading"{% endif %}>
+                    <div class="card-body text-center p-4">
+                        <div class="h1 text-primary mb-3">
+                            {% if hobby.name == 'Reading' %}
+                            <a href="{{ url_for('books') }}" class="text-decoration-none d-block reading-hobby-link">
+                                {{ hobby.icon }}
+                            </a>
+                            {% else %}
+                                {{ hobby.icon }}
+                            {% endif %}
+                        </div>
+                        <h5 class="card-title mb-2">
+                            {% if hobby.name == 'Reading' %}
+                            <a href="{{ url_for('books') }}" class="text-decoration-none reading-hobby-link">
+                                {{ hobby.name }}
+                            </a>
+                            {% else %}
+                                {{ hobby.name }}
+                            {% endif %}
+                        </h5>
+                        <p class="card-text text-muted mb-0">{{ hobby.description }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+
+<!-- Contact Section -->
+<section id="contact" class="contact-section py-5">
+    <div class="container">
+        <div class="section-header text-center mb-5" data-aos="fade-up">
+            <span class="text-primary fw-bold">Get In Touch</span>
+            <h2 class="display-5 fw-bold text-dark">Let's Work Together</h2>
+            <div class="divider mx-auto my-3"></div>
+            <p class="lead text-muted">Feel free to reach out for collaborations or just a friendly hello</p>
+        </div>
+        
+        <div class="row">
+            <!-- Contact Information -->
+            <div class="col-lg-5 mb-5 mb-lg-0" data-aos="fade-right">
+                <div class="contact-info p-4">
+                    <h3 class="contact-heading mb-4"><i class="fas fa-envelope-open-text me-2"></i>Let's Connect</h3>
+                    <p class="contact-description mb-4">
+                        I'm actively seeking new opportunities and collaborations. Whether you have a project in mind, 
+                        want to discuss potential partnerships, or just want to say hello, I'd love to hear from you. 
+                        Let's bring innovative ideas to life together!
+                    </p>
+                    
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <div class="contact-text">
+                                <h4>Email</h4>
+                                <a href="mailto:{{ data.email }}" class="contact-link">{{ data.email }}</a>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div class="contact-text">
+                                <h4>Location</h4>
+                                <span class="location-text">{{ data.location }}</span>
+                            </div>
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Contact Form -->
+            <div class="col-lg-7" data-aos="fade-left" data-aos-delay="100">
+                <div class="contact-form">
+                    <h3 class="mb-4"><i class="fas fa-paper-plane me-2"></i>Send Me a Message</h3>
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category }}">{{ message }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                    <form id="contactForm" action="https://formspree.io/f/mblzoqyo" method="POST">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="name" name="name" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                                <input type="email" class="form-control" id="email" name="_replyto" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="subject" class="form-label">Subject <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="subject" name="_subject" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Message <span class="text-danger">*</span></label>
+                            <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        <!-- Add a honeypot field to help prevent spam -->
+                        <div style="position: absolute; left: -5000px;" aria-hidden="true">
+                            <input type="text" name="_gotcha" tabindex="-1">
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary btn-lg">Send Message</button>
+                        </div>
+                    </form>
+                    <!-- Add JavaScript to handle form submission feedback -->
+                    <script>
+                        var form = document.getElementById('contactForm');
+                        form.addEventListener('submit', function(event) {
+                            event.preventDefault();
+                            var formData = new FormData(form);
+                            fetch(form.action, {
+                                method: 'POST',
+                                body: formData,
+                                headers: {
+                                    'Accept': 'application/json'
+                                }
+                            })
+                            .then(response => {
+                                if (response.ok) {
+                                    // Show success message
+                                    var successAlert = document.createElement('div');
+                                    successAlert.className = 'alert alert-success mt-3';
+                                    successAlert.textContent = 'Your message has been sent successfully! I\'ll get back to you soon.';
+                                    form.parentNode.insertBefore(successAlert, form.nextSibling);
+                                    form.reset();
+                                    
+                                    // Scroll to show the success message
+                                    successAlert.scrollIntoView({ behavior: 'smooth' });
+                                } else {
+                                    throw new Error('Form submission failed');
+                                }
+                            })
+                            .catch(error => {
+                                // Show error message
+                                var errorAlert = document.createElement('div');
+                                errorAlert.className = 'alert alert-danger mt-3';
+                                errorAlert.textContent = 'There was a problem sending your message. Please try again later or email me directly at {{ data.email }}.';
+                                form.parentNode.insertBefore(errorAlert, form.nextSibling);
+                                
+                                // Scroll to show the error message
+                                errorAlert.scrollIntoView({ behavior: 'smooth' });
+                            });
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Simple theme toggle functionality
+    const themeToggle = document.getElementById('themeToggle');
+    
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            // If you want to completely remove theme toggling, you can remove this event listener
+            // or replace it with a different functionality
+            console.log('Theme toggle clicked');
+        });
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,393 @@
+{% extends "base.html" %}
+
+{% block title %}My Education - {{ data.name }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    :root {
+        --primary: #C4737C;
+        --primary-rgb: 196, 115, 124;
+        --accent: #DFA0F3;
+        --text-dark: #1C1C1C;
+        --text-soft: #4A4A4A;
+        --light-bg: #F3EEE9;
+        --card-bg: #ffffff;
+        --timeline-border: #e9ecef;
+        --transition: all 0.3s ease;
+        --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.05);
+        --shadow-md: 0 10px 15px rgba(0, 0, 0, 0.1);
+        --shadow-lg: 0 20px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Section Styling */
+    .education-section {
+        padding: 6rem 2rem 8rem;
+        background: var(--light-bg);
+        min-height: 100vh;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Back Button */
+    .back-button {
+        position: relative;
+        margin: 3rem auto 0;
+        text-align: center;
+        z-index: 10;
+        background: var(--primary);
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        transition: var(--transition);
+        display: inline-block;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .back-button .btn {
+        background: transparent;
+        color: white;
+        border: 2px solid white;
+        padding: 0.6rem 1.5rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: var(--transition);
+        text-decoration: none;
+    }
+
+    .back-button .btn:hover {
+        background: white;
+        color: var(--primary);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .back-button .btn i {
+        margin-right: 0.3rem;
+        transition: transform 0.3s ease;
+    }
+
+    .back-button .btn:hover i {
+        transform: translateX(-3px);
+    }
+
+    /* Header Styling */
+    .section-header {
+        text-align: center;
+        margin-bottom: 4rem;
+        position: relative;
+        z-index: 1;
+    }
+
+    .section-subtitle {
+        display: inline-block;
+        color: var(--primary);
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 1rem;
+        position: relative;
+        padding-left: 1.5rem;
+    }
+
+    .section-subtitle::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        width: 1rem;
+        height: 2px;
+        background: var(--primary);
+    }
+
+    .section-title {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: var(--text-dark);
+        margin-bottom: 1rem;
+        line-height: 1.2;
+    }
+
+    .section-description {
+        color: var(--text-soft);
+        font-size: 1.1rem;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    /* Circle Container */
+    .education-circle-container {
+        position: relative;
+        width: 100%;
+        height: 600px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Main Circle */
+    .education-circle {
+        position: relative;
+        width: 600px;
+        height: 600px;
+        border: 2px dashed rgba(var(--primary-rgb), 0.3);
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Education Node */
+    .education-node {
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transform-origin: 300px;
+        transition: var(--transition);
+    }
+
+    /* Position nodes in a circle */
+    .education-node:nth-child(1) { transform: rotate(0deg) translateX(200px) rotate(0deg); }
+    .education-node:nth-child(2) { transform: rotate(120deg) translateX(200px) rotate(-120deg); }
+    .education-node:nth-child(3) { transform: rotate(240deg) translateX(200px) rotate(-240deg); }
+
+    /* Education Card */
+    .education-card {
+        width: 180px;
+        min-height: 180px;
+        background: var(--card-bg);
+        border-radius: 20px;
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        box-shadow: var(--shadow-sm);
+        border: 2px solid var(--timeline-border);
+        transition: var(--transition);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .education-node:hover .education-card {
+        transform: scale(1.05);
+        box-shadow: var(--shadow-lg);
+        border-color: var(--primary);
+    }
+
+    /* Card Elements */
+    .education-year {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--primary);
+        margin-bottom: 0.5rem;
+        background: rgba(var(--primary-rgb), 0.1);
+        padding: 0.25rem 0.75rem;
+        border-radius: 50px;
+        display: inline-block;
+    }
+
+    .education-degree {
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: var(--text-dark);
+        margin: 0.5rem 0;
+        line-height: 1.3;
+        width: 100%;
+        word-break: break-word;
+    }
+
+    .education-institution {
+        font-size: 0.8rem;
+        color: var(--text-soft);
+        margin-bottom: 0.5rem;
+        width: 100%;
+        line-height: 1.3;
+    }
+
+    .stat-item {
+        font-size: 0.75rem;
+        color: var(--text-soft);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.3rem;
+        margin-top: 0.3rem;
+        width: 100%;
+    }
+
+    .stat-item i {
+        color: var(--primary);
+    }
+
+    /* Center Circle */
+    .education-center {
+        position: absolute;
+        width: 120px;
+        height: 120px;
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        border-radius: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        text-align: center;
+        z-index: 2;
+        box-shadow: 0 10px 30px rgba(var(--primary-rgb), 0.3);
+    }
+
+    .education-center i {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .education-center span {
+        font-size: 1rem;
+        font-weight: 600;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+        .education-section {
+            padding: 5rem 1.5rem 8rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+        }
+
+        .education-circle-container {
+            height: 500px;
+        }
+
+        .education-circle {
+            width: 500px;
+            height: 500px;
+        }
+
+        .education-node {
+            width: 160px;
+            height: 160px;
+            transform-origin: 250px;
+        }
+
+        .education-card {
+            width: 140px;
+            min-height: 140px;
+            padding: 1rem;
+        }
+
+        .education-degree {
+            font-size: 0.85rem;
+        }
+
+        .education-institution {
+            font-size: 0.75rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .education-circle-container {
+            height: 400px;
+        }
+
+        .education-circle {
+            width: 400px;
+            height: 400px;
+            border: none;
+        }
+
+        .education-node {
+            position: static;
+            width: 100%;
+            height: auto;
+            margin: 1rem 0;
+            transform: none !important;
+        }
+
+        .education-card {
+            width: 100%;
+            min-height: auto;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 0.5rem 0;
+        }
+
+        .education-center {
+            position: relative;
+            margin: 2rem auto;
+            width: 120px;
+            height: 120px;
+        }
+    }
+
+    /* Dark theme support */
+    [data-bs-theme="dark"] .education-card {
+        background: var(--card-bg);
+        border-color: var(--timeline-border);
+    }
+
+    [data-bs-theme="dark"] .education-degree {
+        color: var(--text-dark);
+    }
+
+    [data-bs-theme="dark"] .education-institution {
+        color: var(--text-soft);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Education Section -->
+<section class="education-section">
+    <!-- Section Header -->
+    <div class="section-header">
+        <span class="section-subtitle">My Academic Journey</span>
+        <h1 class="section-title">Education & Qualifications</h1>
+        <p class="section-description">A timeline of my academic achievements and learning journey</p>
+    </div>
+
+    <!-- Education Timeline Circle -->
+    <div class="education-circle-container">
+        <div class="education-circle">
+            {% for edu in data.education %}
+            <div class="education-node">
+                <div class="education-card">
+                    <div class="education-year">{{ edu.year }}</div>
+                    <h3 class="education-degree">{{ edu.degree }}</h3>
+                    <div class="education-institution">{{ edu.institution }}</div>
+                    {% if edu.location %}
+                    <div class="stat-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>{{ edu.location }}</span>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+            
+            <div class="education-center">
+                <i class="fas fa-graduation-cap"></i>
+                <span>My Education</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Back to Home Button -->
+    <div class="back-button">
+        <a href="{{ url_for('home') }}" class="btn">
+            <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+    </div>
+</section>
+{% endblock %}

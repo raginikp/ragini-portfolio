@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Page Not Found - {{ data.name }}{% endblock %}
+
+{% block content %}
+<div class="container-fluid vh-100 d-flex align-items-center justify-content-center bg-light">
+    <div class="text-center">
+        <div class="error-code mb-4">
+            <h1 class="display-1 fw-bold text-primary">404</h1>
+        </div>
+        
+        <div class="error-message mb-4">
+            <h2 class="h3 mb-3">Oops! Page Not Found</h2>
+            <p class="lead text-muted mb-4">
+                The page you're looking for doesn't exist or has been moved.
+            </p>
+        </div>
+        
+        <div class="error-actions">
+            <a href="{{ url_for('home') }}" class="btn btn-primary btn-lg me-3">
+                <i class="fas fa-home me-2"></i>Go Home
+            </a>
+            <a href="{{ url_for('home') }}#contact" class="btn btn-outline-primary btn-lg">
+                <i class="fas fa-envelope me-2"></i>Contact Me
+            </a>
+        </div>
+        
+        <div class="mt-5">
+            <div class="error-illustration">
+                <i class="fas fa-search fa-5x text-muted opacity-50"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.error-code h1 {
+    font-size: 8rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.error-illustration {
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+
+@media (max-width: 768px) {
+    .error-code h1 {
+        font-size: 5rem;
+    }
+}
+</style>
+{% endblock %}
