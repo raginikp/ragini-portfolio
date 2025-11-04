@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ragini Kumari - Portfolio</title>
+ 
+    <!-- for toogle button -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/rose-animation.css') }}">    
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+<style>
+.navbar {
+  width: 100%;
+  padding: 0.6rem 2rem;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 12px rgb(0 0 0 / 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* spread content across */
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: auto;
+  transform: none;
+  margin-right: 0; /* ensures it hugs the right edge */
+  z-index: 1050;
+}
+
+/* Navbar Brand (Logo + name) */
+.navbar-brand {
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+}
+.navbar-brand img {
+  height: 32px;
+  width: auto;
+  margin-right: 0.5rem;
+  transition: transform 0.3s ease;
+}
+.navbar-brand:hover img {
+  transform: scale(1.05);
+}
+
+/* Navbar navigation menu */
+.navbar-nav {
+  display: flex;
+  gap: 1.2rem; /* better spacing for nav items */
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Nav links */
+.nav-link {
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--text-dark);
+  padding: 0.3rem 0.8rem;
+  border-radius: 6px;
+  position: relative;
+  transition: color 0.3s ease;
+  text-decoration: none;
+}
+
+/* Nav link underline on hover & active */
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--primary);
+  transform: translateX(-50%);
+  transition: width 0.3s ease;
+}
+.nav-link:hover, .nav-link.active {
+  color: var(--primary);
+}
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 70%;
+}
+
+/* Responsive adjustments - stack nav links vertically on small screens */
+@media (max-width: 767px) {
+  .navbar-nav {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    width: 100%;
+  }
+  .nav-link {
+    padding: 0.75rem 1rem;
+  }
+}
+
+        
+</style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="#home">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" height="40" class="d-inline-block align-text-top me-2">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" 
+                    aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto" style="gap: 0.1rem;">
+                    <li class="nav-item"><a class="nav-link px-1" href="{{ url_for('home') }}"><i class="fas fa-home me-1"></i> Home</a></li>
+                    <li class="nav-item"><a class="nav-link px-1" href="{{ url_for('home') }}#about"><i class="fas fa-user me-1"></i> About</a></li>
+                    <li class="nav-item"><a class="nav-link px-1" href="{{ url_for('home') }}#experience"><i class="fas fa-briefcase me-1"></i> Experience</a></li>
+                    <li class="nav-item"><a class="nav-link px-1" href="{{ url_for('home') }}#projects"><i class="fas fa-code me-1"></i> Projects</a></li>
+                    <li class="nav-item"><a class="nav-link px-1" href="{{ url_for('home') }}#achievements"><i class="fas fa-trophy me-1"></i> Achievements</a></li>
+                    <li class="nav-item"><a class="nav-link px-1" href="{{ url_for('home') }}#contact"><i class="fas fa-envelope me-1"></i> Contact</a></li>
+                    <li class="nav-item">
+                        <button class="circle-toggle" id="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
+                        <i class="fa-solid fa-moon"></i>
+                        <i class="fa-solid fa-sun"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-light py-4 mt-5">
+        <div class="container text-center">
+            <p class="mb-0">&copy; 2025 Ragini Kumari. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/contact.js') }}"></script>
+   
+</body>
+</html>

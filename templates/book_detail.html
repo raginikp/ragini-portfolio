@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}{{ book.title }} - Book Details{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="card shadow-sm mb-4">
+                <div class="position-relative" style="min-height: 400px; background-color: #f8f9fa;">
+                    <img 
+                        src="{{ book.cover_image }}" 
+                        class="img-fluid w-100 h-100 book-cover" 
+                        alt="{{ book.title }}"
+                        loading="lazy"
+                        onerror="this.onerror=null; this.src='{{ book.fallback_image }}'"
+                        style="object-fit: contain; padding: 1rem;"
+                    >
+                    <div class="position-absolute top-50 start-50 translate-middle text-center d-none" id="loading-spinner">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body text-center">
+                    <h5 class="card-title">{{ book.title }}</h5>
+                    <p class="card-text text-muted">by {{ book.author }}</p>
+                    <div class="d-flex justify-content-center gap-2">
+                        <span class="badge bg-primary">{{ book.genre }}</span>
+                        <span class="badge bg-secondary">{{ book.pages }} pages</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h2 class="mb-3">{{ book.title }}</h2>
+                    <h5 class="text-muted mb-4">by {{ book.author }}</h5>
+                    
+                    <div class="mb-4">
+                        <h5>About the Book</h5>
+                        <p class="lead">{{ book.description }}</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5>My Thoughts</h5>
+                        <p class="mb-3">{{ book.thoughts }}</p>
+                        <div class="rating mb-3">
+                            <span class="fw-bold">My Rating: </span>
+                            {% for i in range(book.rating|int) %}
+                                <i class="fas fa-star text-warning"></i>
+                            {% endfor %}
+                            {% if book.rating % 1 != 0 %}
+                                <i class="fas fa-star-half-alt text-warning"></i>
+                                {% set empty_stars = 5 - book.rating|int - 1 %}
+                            {% else %}
+                                {% set empty_stars = 5 - book.rating|int %}
+                            {% endif %}
+                            {% for i in range(empty_stars) %}
+                                <i class="far fa-star text-warning"></i>
+                            {% endfor %}
+                            <span class="ms-2">{{ book.rating }}/5.0</span>
+                        </div>
+                    </div>
+                    
+                    <div class="book-meta mt-auto">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="p-3 bg-light rounded">
+                                    <h6 class="text-muted mb-3">Book Details</h6>
+                                    <p><strong>Published:</strong> {{ book.published_date }}</p>
+                                    <p><strong>Genre:</strong> {{ book.genre }}</p>
+                                    <p><strong>Pages:</strong> {{ book.pages }}</p>
+                                    <p><strong>Format:</strong> {{ book.format }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="p-3 bg-light rounded">
+                                    <h6 class="text-muted mb-3">Reading Progress</h6>
+                                    <p><strong>Started:</strong> {{ book.start_date }}</p>
+                                    <p><strong>Finished:</strong> {{ book.finish_date }}</p>
+                                    <p><strong>Status:</strong> 
+                                        <span class="badge bg-{{ 'success' if book.status == 'read' else 'warning' if book.status == 'reading' else 'secondary' }}">
+                                            {{ book.status|title }}
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4 text-end">
+                        <a href="{{ url_for('books') }}" class="btn btn-outline-primary">
+                            <i class="fas fa-arrow-left me-2"></i>Back to All Books
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
