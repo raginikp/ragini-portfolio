@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ragini Kumari - Portfolio</title>
-    
-    <!-- Bootstrap CSS -->
+ 
+    <!-- for toogle button -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -13,193 +14,105 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/consoles.css') }}">
-    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/rose-animation.css') }}">    
     <!-- Preconnect to external domains -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <style>
-        /* Enhanced Navigation Bar */
-        .navbar {
-            padding: 0.8rem 3rem;
-            transition: all 0.3s ease;
-            background: rgba(255, 255, 255, 0.98) !important;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-        }
+<style>
+.navbar {
+  width: 100%;
+  padding: 0.6rem 2rem;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 12px rgb(0 0 0 / 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* spread content across */
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: auto;
+  transform: none;
+  margin-right: 0; /* ensures it hugs the right edge */
+  z-index: 1050;
+}
+
+/* Navbar Brand (Logo + name) */
+.navbar-brand {
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+}
+.navbar-brand img {
+  height: 32px;
+  width: auto;
+  margin-right: 0.5rem;
+  transition: transform 0.3s ease;
+}
+.navbar-brand:hover img {
+  transform: scale(1.05);
+}
+
+/* Navbar navigation menu */
+.navbar-nav {
+  display: flex;
+  gap: 1.2rem; /* better spacing for nav items */
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Nav links */
+.nav-link {
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--text-dark);
+  padding: 0.3rem 0.8rem;
+  border-radius: 6px;
+  position: relative;
+  transition: color 0.3s ease;
+  text-decoration: none;
+}
+
+/* Nav link underline on hover & active */
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--primary);
+  transform: translateX(-50%);
+  transition: width 0.3s ease;
+}
+.nav-link:hover, .nav-link.active {
+  color: var(--primary);
+}
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 70%;
+}
+
+/* Responsive adjustments - stack nav links vertically on small screens */
+@media (max-width: 767px) {
+  .navbar-nav {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    width: 100%;
+  }
+  .nav-link {
+    padding: 0.75rem 1rem;
+  }
+}
+
         
-        .navbar-brand {
-            padding: 0.5rem 0;
-            font-weight: 700;
-            font-size: 1.5rem;
-            color: var(--primary) !important;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .navbar-brand img {
-            transition: transform 0.3s ease;
-            height: 32px;
-            width: auto;
-        }
-        
-        .navbar-nav {
-            gap: 0.8rem;
-            align-items: center;
-        }
-        
-        .nav-link {
-            padding: 0.5rem 1.2rem !important;
-            font-size: 0.95rem !important;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-            color: var(--text-dark) !important;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            width: 0;
-            height: 2px;
-            background: var(--primary);
-            transition: all 0.3s ease;
-            transform: translateX(-50%);
-        }
-        
-        .nav-link:hover::after {
-            width: 70%;
-        }
-        
-        .nav-link.active {
-            color: var(--primary) !important;
-            font-weight: 600;
-        }
-        
-        .nav-link.active::after {
-            width: 70%;
-        }
-        
-        .navbar-toggler {
-            padding: 0.5rem 0.75rem;
-            border: none;
-            box-shadow: none !important;
-            font-size: 0.9rem;
-        }
-        .navbar-brand:hover img {
-            transform: scale(1.05);
-        }
-        
-        .nav-link {
-            font-weight: 500;
-            font-size: 0.85rem;
-            padding: 0.4rem 0.6rem;
-            border-radius: 4px;
-        }
-        
-        .nav-link i {
-            width: 16px;
-            text-align: center;
-            margin-right: 4px;
-            transition: transform 0.2s ease;
-        }
-        .nav-link:hover i {
-            transform: scale(1.2);
-        }
-        
-        .nav-link:hover {
-            color: var(--bs-primary) !important;
-        }
-        .navbar-toggler {
-            border: none;
-            padding: 0.5rem;
-        }
-        
-        .navbar-toggler:focus {
-            box-shadow: none;
-            outline: none;
-        }
-        
-        /* Console Base Styling */
-        .terminal,
-        .project-console {
-            height: auto;
-            min-height: 200px;
-            max-height: 400px;
-            display: flex;
-            flex-direction: column;
-            overflow: auto;
-            border-radius: 6px;
-            margin: 1rem 0;
-            padding: 1rem;
-            background: #1e1e1e;
-            border: 1px solid #3c3c3c;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            font-family: 'Fira Code', 'Consolas', monospace;
-            color: #e0e0e0;
-        }
-        
-        /* Education Section */
-        .education-item {
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border-radius: 8px;
-            background: var(--bs-light-bg-subtle);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .education-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        /* Gallery Section */
-        .gallery-item {
-            position: relative;
-            overflow: hidden;
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        
-        .gallery-item img {
-            transition: transform 0.5s ease;
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-        }
-        
-        .gallery-item:hover img {
-            transform: scale(1.05);
-        }
-        
-        .gallery-caption {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 1rem;
-            transform: translateY(100%);
-            transition: transform 0.3s ease;
-        }
-        
-        .gallery-item:hover .gallery-caption {
-            transform: translateY(0);
-        }
-    </style>
+</style>
 </head>
 <body>
     <!-- Navigation -->
@@ -213,16 +126,17 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#home"><i class="fas fa-home me-1"></i> Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#about"><i class="fas fa-user me-1"></i> About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#experience"><i class="fas fa-briefcase me-1"></i> Experience</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#projects"><i class="fas fa-code me-1"></i> Projects</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#achievements"><i class="fas fa-trophy me-1"></i> Achievements</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#contact"><i class="fas fa-envelope me-1"></i> Contact</a></li>
+                <ul class="navbar-nav ms-auto" style="gap: 0.1rem;">
+                    <li class="nav-item"><a class="nav-link px-1" href="{{ url_for('home') }}"><i class="fas fa-home me-1"></i> Home</a></li>
+                    <li class="nav-item"><a class="nav-link px-1" href="{{ url_for('home') }}#about"><i class="fas fa-user me-1"></i> About</a></li>
+                    <li class="nav-item"><a class="nav-link px-1" href="{{ url_for('home') }}#experience"><i class="fas fa-briefcase me-1"></i> Experience</a></li>
+                    <li class="nav-item"><a class="nav-link px-1" href="{{ url_for('home') }}#projects"><i class="fas fa-code me-1"></i> Projects</a></li>
+                    <li class="nav-item"><a class="nav-link px-1" href="{{ url_for('home') }}#achievements"><i class="fas fa-trophy me-1"></i> Achievements</a></li>
+                    <li class="nav-item"><a class="nav-link px-1" href="{{ url_for('home') }}#contact"><i class="fas fa-envelope me-1"></i> Contact</a></li>
                     <li class="nav-item">
-                        <button id="themeToggle" class="nav-link">
-                            <i class="fas fa-moon"></i>
+                        <button class="circle-toggle" id="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
+                        <i class="fa-solid fa-moon"></i>
+                        <i class="fa-solid fa-sun"></i>
                         </button>
                     </li>
                 </ul>
@@ -245,49 +159,10 @@
     <!-- JavaScript Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <!-- Custom JavaScript -->
+    
     <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/projects.js') }}"></script>
     <script src="{{ url_for('static', filename='js/contact.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/gallery.js') }}"></script>
-    
-    <script>
-        // Initialize AOS
-        document.addEventListener('DOMContentLoaded', function() {
-            AOS.init({
-                duration: 800,
-                easing: 'ease-in-out',
-                once: true,
-                mirror: false
-            });
-            
-            // Initialize theme
-            if (localStorage.getItem('theme') === 'dark' || 
-                (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                document.documentElement.setAttribute('data-theme', 'dark');
-                document.documentElement.setAttribute('data-bs-theme', 'dark');
-            } else {
-                document.documentElement.setAttribute('data-theme', 'light');
-                document.documentElement.setAttribute('data-bs-theme', 'light');
-            }
-            
-            // Smooth scrolling for navigation links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                });
-            });
-        });
-    </script>
-    
-    {% block scripts %}{% endblock %}
+   
 </body>
 </html>

@@ -7,6 +7,8 @@ from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from flask_caching import Cache
 from dotenv import load_dotenv
+import redis
+
 
 # Load environment variables
 load_dotenv()
@@ -14,16 +16,30 @@ load_dotenv()
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
 
+
+# Initialize Redis
+redis_client = redis.Redis(host='localhost', port=6379, db=0)
+
+# Configure Limiter with Redis
+limiter = Limiter(
+    app=app,
+    key_func=get_remote_address,
+    storage_uri="redis://localhost:6379",
+    storage_options={"socket_connect_timeout": 30},
+    strategy="fixed-window"  # or "moving-window"
+)
+
+
 # Configure caching
 app.config['CACHE_TYPE'] = 'simple'
 app.config['CACHE_DEFAULT_TIMEOUT'] = 300  # 5 minutes
 cache = Cache(app)
 
-# Rate limiting
+# Rate limiting - increased for development
 limiter = Limiter(
     app=app,
     key_func=get_remote_address,
-    default_limits=["200 per day", "50 per hour"]
+    default_limits=["1000 per day", "200 per hour"]
 )
 
 # Configure logging
@@ -64,33 +80,6 @@ PORTFOLIO_DATA ={
     'resume': '/static/files/Ragini_Kumari_Resume.pdf',  # Add your resume file to static/files/
     'location': 'India',
     
-    'education': [
-        {
-            'degree': 'B.Tech in Computer Science & Engineering (AI)',
-            'institution': 'Poornima College of Engineering',
-            'year': '2022 - 2026',
-            'cgpa': '8.87',
-            'location': 'Jaipur, Rajasthan',
-            'details': 'Pursuing B.Tech in Computer Science & Engineering with specialization in Artificial Intelligence. Gaining expertise in machine learning, deep learning, and AI technologies.'
-        },
-        {
-            'degree': 'Senior Secondary (XII)',
-            'institution': 'Kendriya Vidyalaya NO 2 jaipur',
-            'year': '2022',
-            'percentage': '74.5%',
-            'location': 'Jaipur, Rajasthan',
-            'details': 'Completed 12th grade with Physics, Chemistry, Biology, and Mathematics (PCMB).'
-        },
-        {
-            'degree': 'Secondary (X)',
-            'institution': 'Kendriya Vidyalaya No 2 Delhi',
-            'year': '2020',
-            'percentage': '78',
-            'location': 'New Delhi, India',
-            'details': 'Completed 10th grade with excellent academic performance and active participation in co-curricular activities.'
-        }
-    ],
-    
     'skills': {
         'languages': [
             {'name': 'Python', 'icon': 'fab fa-python', 'wikipedia': 'https://en.wikipedia.org/wiki/Python_(programming_language)'},
@@ -117,25 +106,45 @@ PORTFOLIO_DATA ={
     },
     
     'projects': [
-        {
-            'title': 'Sophisticated-Admin-Dashboard-for-Bot-Performance-Evaluation',
-            'description': 'A comprehensive dashboard for evaluating bot performance with detailed analytics and metrics',
-            'tech': ['Power Bi'],
-            'github': 'https://github.com/raginikp/Sophisticated-Admin-Dashboard-for-Bot-Performance-Evaluation'
-        },
-        {
-            'title': 'Portfolio',
-            'description': 'A portfolio that blends AI innovation with personal creativity to showcase who I am and what I stand for.',
-            'tech': ['Python', 'flask', 'jinja2', 'HTML', 'CSS'],
-        },
-        # {
-        #     'title': 'Task Management System',
-        #     'description': 'Collaborative task management application with real-time updates and team collaboration features',
-        #     'tech': ['React', 'Express.js', 'Socket.io', 'MySQL'],
-        #     'github': 'https://github.com/raginikp',
-        #     'demo': '#'
-        # }
-    ],
+    {
+        'title': 'Sophisticated-Admin-Dashboard-for-Bot-Performance-Evaluation',
+        'description': 'A comprehensive dashboard for evaluating bot performance with detailed analytics and metrics',
+        'short_description': [
+            'It is a bot for a particular data and particular department.'
+        ],
+        'tech': ['Power Bi'],
+        'github': 'https://github.com/raginikp/Sophisticated-Admin-Dashboard-for-Bot-Performance-Evaluation'
+    },
+    {
+        'title': 'Portfolio',
+        'description': 'A portfolio that blends AI innovation with personal creativity to showcase who I am and what I stand for.',
+        'short_description': [
+            'It is a perfect blend of AI with creativity.',
+            'Combined many different AI tooks and my knowledge of programming'
+        ],
+        'tech': ['Python', 'flask', 'jinja2', 'HTML', 'CSS'],
+        'github': 'https://github.com/raginikp/Portfolio',
+        'screenshots': [
+               '/static/images/projects/portfolio1.png'
+        ]
+    },
+    {
+        'title': 'News Aggregator',
+        'description': 'A web application that aggregates news from various sources and presents them in a clean, organized manner.',
+        'short_description': [
+            'Aggregates news from multiple sources',
+            'Clean and responsive user interface',
+            'Customizable news categories'
+        ],
+        'tech': ['Python', 'Flask', 'BeautifulSoup', 'HTML', 'CSS'],
+        'github': 'https://github.com/raginikp/news_aggregator',
+        'screenshots': [
+               '/static/images/projects/news1.png',
+               '/static/images/projects/news2.png'
+        ]
+    },
+    # other projects ...
+],
     
     'travel_places':[
         {'name': 'Rajasthan', 'description': 'Majestic palaces and desert landscapes', 'emoji': '🏰'},
@@ -250,44 +259,7 @@ PORTFOLIO_DATA ={
             'status': 'read',
             'thoughts': 'An excellent book that provides practical strategies for building good habits and breaking bad ones. The concepts are well-explained and actionable.'
         }
-    ],
-    'college_memories': [
-    # Academic Events
-    {
-        'title': 'Tech Symposium',
-        'category': 'academic',
-        'images': [f'academic/{i}.jpg' for i in range(1, 7)]  # 1.jpg to 6.jpg
-    },
-    {
-        'title': 'Science Exhibition',
-        'category': 'academic',
-        'images': [f'academic/{i}.jpg' for i in range(7, 13)]  # 7.jpg to 12.jpg
-    },
-    
-    # Cultural Events
-    {
-        'title': 'Cultural Fest',
-        'category': 'cultural',
-        'images': [f'cultural/{i}.jpg' for i in range(1, 7)]  # 1.jpg to 6.jpg
-    },
-    {
-        'title': 'Annual Day',
-        'category': 'cultural',
-        'images': [f'cultural/{i}.jpg' for i in range(7, 13)]  # 7.jpg to 12.jpg
-    },
-    
-    # Social Events
-    {
-        'title': 'Sports Day',
-        'category': 'social',
-        'images': [f'social/{i}.jpg' for i in range(1, 7)]  # 1.jpg to 6.jpg
-    },
-    {
-        'title': 'Freshers Party',
-        'category': 'social',
-        'images': [f'social/{i}.jpg' for i in range(7, 13)]  # 7.jpg to 12.jpg
-    }
-]
+    ],    
 }
 
     
@@ -296,44 +268,6 @@ PORTFOLIO_DATA ={
 reading_hobby = next((h for h in PORTFOLIO_DATA['hobbies'] if h['name'] == 'Reading'), None)
 if reading_hobby:
     reading_hobby['books'] = PORTFOLIO_DATA['books']
-
-def get_images_from_folder(folder_name):
-    """Get all image filenames from a specific folder in college-fest directory."""
-    folder_path = os.path.join(app.static_folder, 'images', 'college-fest', folder_name)
-    if os.path.exists(folder_path):
-        # Get all files and filter for images
-        images = [f for f in os.listdir(folder_path) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.gif'))]
-        # Sort images numerically if they contain numbers
-        images.sort(key=lambda x: int(''.join(filter(str.isdigit, x))) if any(c.isdigit() for c in x) else 0)
-        return images
-    return []
-
-def get_category_images(category):
-    """Get all image filenames from a specific category directory."""
-    category_dir = os.path.join(app.static_folder, 'images', 'college-fest', category)
-    if not os.path.exists(category_dir):
-        return []
-    images = [f for f in os.listdir(category_dir) 
-             if f.lower().endswith(('.png', '.jpg', '.jpeg', '.gif'))]
-    # Sort images naturally (1.jpg, 2.jpg, ..., 10.jpg)
-    images.sort(key=lambda x: int(''.join(filter(str.isdigit, x))) if any(c.isdigit() for c in x) else 0)
-    return images
-
-# Add functions to Jinja globals after they are defined
-app.jinja_env.globals.update(
-    get_images_from_folder=get_images_from_folder,
-    get_category_images=get_category_images
-)
-
-def get_cultural_images():
-    """Get all cultural image filenames from the cultural directory in their natural order."""
-    cultural_dir = os.path.join(app.static_folder, 'images', 'college-fest', 'cultural')
-    if os.path.exists(cultural_dir):
-        images = [f for f in os.listdir(cultural_dir) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.gif'))]
-        # Sort images naturally (1.jpg, 2.jpg, ..., 10.jpg)
-        images.sort(key=lambda x: int(''.join(filter(str.isdigit, x))) if any(c.isdigit() for c in x) else 0)
-        return images
-    return []
 
 @app.route('/')
 def home():
@@ -346,64 +280,10 @@ def about():
 @app.route('/projects')
 def projects():
     return render_template('projects.html', data=PORTFOLIO_DATA)
-
 @app.route('/education')
 def education():
     return render_template('education.html', data=PORTFOLIO_DATA)
     
-def get_fest_images_by_category(limit=None):
-    """Get images from college-fest subdirectories, organized by category."""
-    import os
-    from flask import current_app
-    
-    categories = {}
-    base_dir = os.path.join(current_app.static_folder, 'images', 'college-fest')
-    
-    for category in ['academics', 'cultural', 'social']:
-        category_dir = os.path.join(base_dir, category)
-        categories[category] = []
-        if os.path.exists(category_dir):
-            files = sorted([f for f in os.listdir(category_dir) 
-                          if f.lower().endswith(('.png', '.jpg', '.jpeg', '.gif'))])
-            
-            # Apply limit if specified
-            files = files[:limit] if limit is not None else files
-            
-            for filename in files:
-                categories[category].append({
-                    'path': f'images/college-fest/{category}/{filename}',
-                    'alt': f'College fest - {category} - {filename}'
-                })
-    return categories
-
-@app.route('/college-fest')
-def college_fest():
-    """College memories page with category links."""
-    return render_template('college_fest.html', 
-                         data={'name': 'College Fest'})
-
-@app.route('/college-fest/<category>')
-def show_category(category):
-    """Show images for a specific category."""
-    if category not in ['academics', 'cultural', 'social']:
-        abort(404)
-        
-    # Get all images for the category
-    images = []
-    base_dir = os.path.join(app.static_folder, 'images', 'college-fest', category)
-    if os.path.exists(base_dir):
-        files = sorted([f for f in os.listdir(base_dir) 
-                       if f.lower().endswith(('.png', '.jpg', '.jpeg', '.gif'))])
-        
-        images = [{
-            'path': f'images/college-fest/{category}/{filename}',
-            'alt': f'College fest - {category} - {filename}'
-        } for filename in files]
-    
-    return render_template('category.html',
-                         data={'name': 'College Fest'},
-                         category=category,
-                         images=images)
 @app.route('/books')
 def books():
     return render_template('books.html', data=PORTFOLIO_DATA, books=PORTFOLIO_DATA['books'])

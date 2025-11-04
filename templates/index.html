@@ -1,238 +1,591 @@
 {% extends "base.html" %}
 
 {% block content %}
-<!-- Hero Section -->
-<section id="home" class="hero-section section-with-rose d-flex align-items-center position-relative" style="min-height: 100vh; padding: 0;">
     <!-- Back to Top Button -->
-    <button id="back-to-top" class="back-to-top" aria-label="Back to top">
+     <button id="back-to-top" class="back-to-top" aria-label="Back to top">
         <i class="fas fa-chevron-up"></i>
     </button>
-    <!-- Rose Animation Background -->
-    <div class="rose-bg">
-        <div class="rose-petal"></div>
-        <div class="rose-petal"></div>
-        <div class="rose-petal"></div>
-        <div class="rose-petal"></div>
-        <div class="rose-petal"></div>
+
+<!-- Hero Section -->
+<section id="home" class="hero-section">
+    <div class="hero-bg">
+        <div class="gradient-overlay"></div>
     </div>
     
-    <div class="container py-5 section-content">
-        <div class="row align-items-center">
-            <div class="col-lg-6 mb-3">
-                <h1 class="display-4 fw-bold mb-3" data-aos="fade-right" data-aos-delay="100">
-                    Hello, I'm <span class="name-animate">{{ data.name }}</span>
-                </h1>
-                <h2 class="text-muted mb-4" data-aos="fade-right" data-aos-delay="200">{{ data.title }}</h2>
-                <p class="lead mb-4" data-aos="fade-right" data-aos-delay="250">A passionate developer creating innovative solutions and exploring new technologies.</p>
-                <div class="button-group" data-aos="fade-up" data-aos-delay="300">
-                    <a href="#contact" class="custom-btn primary-btn">
-                        <i class="fas fa-envelope"></i>
-                        <span>Contact Me</span>
-                    </a>
-                    <a href="{{ data.resume }}" class="custom-btn secondary-btn" target="_blank">
-                        <i class="fas fa-file-alt"></i>
-                        <span>View Resume</span>
-                    </a>
-                </div>
-                <style>
-                    .button-group {
-                        display: flex;
-                        gap: 1.5rem;
-                        flex-wrap: wrap;
-                        margin-top: 2rem;
-                    }
-                    
-                    .custom-btn {
-                        display: inline-flex;
-                        align-items: center;
-                        justify-content: center;
-                        padding: 0.9rem 2.2rem;
-                        border-radius: 8px;
-                        font-weight: 600;
-                        font-size: 1rem;
-                        text-decoration: none;
-                        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-                        border: 2px solid transparent;
-                        cursor: pointer;
-                        min-width: 170px;
-                        text-align: center;
-                        position: relative;
-                        overflow: hidden;
-                        z-index: 1;
-                    }
-                    
-                    .primary-btn {
-                        background: var(--primary);
-                        color: white;
-                        border-color: var(--primary);
-                        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-                    }
-                    
-                    .primary-btn::before {
-                        content: '';
-                        position: absolute;
-                        top: 0;
-                        left: -100%;
-                        width: 100%;
-                        height: 100%;
-                        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-                        transition: 0.5s;
-                        z-index: -1;
-                    }
-                    
-                    .primary-btn:hover::before {
-                        left: 100%;
-                    }
-                    
-                    .primary-btn:hover {
-                        transform: translateY(-3px);
-                        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-                    }
-                    
-                    .secondary-btn {
-                        background: transparent;
-                        color: var(--primary);
-                        border-color: var(--primary);
-                        position: relative;
-                        z-index: 1;
-                    }
-                    
-                    .secondary-btn::before {
-                        content: '';
-                        position: absolute;
-                        top: 0;
-                        left: 0;
-                        width: 0;
-                        height: 100%;
-                        background: var(--primary);
-                        transition: 0.5s;
-                        z-index: -1;
-                        opacity: 0.1;
-                    }
-                    
-                    .secondary-btn:hover::before {
-                        width: 100%;
-                    }
-                    
-                    .secondary-btn:hover {
-                        transform: translateY(-3px);
-                        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-                    }
-                    
-                    .custom-btn i {
-                        margin-right: 0.6rem;
-                        font-size: 1.1em;
-                        transition: transform 0.3s ease;
-                    }
-                    
-                    .custom-btn:hover i {
-                        transform: translateX(3px);
-                    }
-                    
-                    .custom-btn:active {
-                        transform: translateY(0) !important;
-                        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
-                    }
-                    
-                    
-                    .custom-btn:hover i {
-                        transform: translateX(3px);
-                    }
-                    
-                    @media (max-width: 576px) {
-                        .button-group {
-                            flex-direction: column;
-                            width: 100%;
-                            gap: 0.8rem;
-                        }
-                        
-                        .custom-btn {
-                            width: 100%;
-                            padding: 0.9rem 1.5rem;
-                            border-radius: 8px;
-                        }
-                    }
-                </style>
-                <div class="social-links mt-4">
-                    <a href="{{ data.github }}" target="_blank" class="text-muted me-3">
-                        <i class="fab fa-github fa-lg"></i>
-                    </a>
-                    <a href="{{ data.linkedin }}" target="_blank" class="text-muted me-3">
-                        <i class="fab fa-linkedin-in fa-lg"></i>
-                    </a>
-                    <a href="mailto:{{ data.email }}" class="text-muted me-3">
-                        <i class="fas fa-envelope fa-lg"></i>
-                    </a>
-                    <span class="secret-message" style="display: inline-block; vertical-align: middle;">
-                        <i class="fas fa-lock fa-lg" style="color: var(--primary);"></i>
-                        <span class="secret-text">This site has many secrets - feel free to explore and discover them all!</span>
-                    </span>
-                </div>
-            </div>
-            <div class="col-lg-6 text-center mt-5 mt-lg-0" data-aos="fade-left">
-                <div class="position-relative d-inline-block">
-                    <div class="profile-image-container" style="position: relative; display: inline-block;">
-                        <img src="{{ url_for('static', filename='images/profile.jpg') }}" 
-                             alt="{{ data.name }}" 
-                             class="img-fluid rounded-circle profile-hover"
-                             style="width: 300px; height: 300px; object-fit: cover; border: 5px solid white; box-shadow: 0 0 0 5px var(--primary); transition: all 0.4s ease; transform-style: preserve-3d;">
-                        
-                        <div class="graduation-cap" style="position: absolute; right: 20px; bottom: 20px; background: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); z-index: 2; transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);">
-                            <i class="fas fa-graduation-cap" style="color: var(--primary); font-size: 1.5rem; transition: all 0.3s ease;"></i>
-                        </div>
-                        
-                        <!-- Halo effect -->
-                        <div class="profile-halo" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%); opacity: 0; transition: all 0.5s ease;"></div>
+    <div class="hero-content">
+        <div class="container">
+            <div class="row min-vh-100 align-items-center">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <!-- Greeting -->
+                    <div class="greeting mb-3">
+                        <span class="wave-emoji">👋</span>
+                        <span class="greeting-text">Hello, I'm</span>
                     </div>
                     
-                    <style>
-                        .profile-image-container:hover .profile-hover {
-                            transform: scale(1.03) rotate(2deg);
-                            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-                        }
+                    <!-- Name -->
+                    <h1 class="display-4 fw-bold mb-3 name-gradient">
+                        {{ data.name }}
+                    </h1>
+                    
+                    <!-- Title -->
+                    <h2 class="mb-4" style="color: var(--primary) !important;">
+                        {{ data.title }}
+                    </h2>
+                    
+                    <!-- Tagline -->
+                    <p class="lead mb-4" style="color: var(--text-muted);">
+                        {{ data.tagline or "Crafting digital experiences through clean code and creative solutions." }}
+                    </p>
+                    
+                    <!-- CTA Buttons -->
+                    <div class="d-flex flex-wrap gap-3 mb-4" data-aos="fade-up" data-aos-delay="200">
+                        <a href="#contact" class="btn btn-primary btn-lg px-4">
+                            <i class="fas fa-paper-plane me-2"></i>Get In Touch
+                        </a>
+                        <a href="{{ data.resume }}" class="btn btn-outline-primary btn-lg px-4" target="_blank">
+                            <i class="fas fa-file-alt me-2"></i>View Resume
+                        </a>
+                    </div>
+                    
+                    <!-- Social Links -->
+                    <div class="social-links d-flex gap-3 mb-5" data-aos="fade-up" data-aos-delay="250">
+                        {% if data.github %}
+                        <a href="{{ data.github }}" target="_blank" class="social-icon" aria-label="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="social-icon lock-icon" aria-label="Secret Lock" title="You have a lot to explore" tabindex="0">
+                            <i class="fas fa-lock"></i>
+                        </a>
+                        {% endif %}
+                        {% if data.linkedin %}
+                        <a href="{{ data.linkedin }}" target="_blank" class="social-icon" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        {% endif %}
+                        {% if data.email %}
+                        <a href="mailto:{{ data.email }}" class="social-icon" aria-label="Email">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                        {% endif %}
                         
-                        .profile-image-container:hover .graduation-cap {
-                            transform: translateY(-10px) rotate(10deg);
-                            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-                        }
-                        
-                        .profile-image-container:hover .profile-halo {
-                            opacity: 1;
-                            transform: scale(1.1);
-                        }
-                        
-                        /* Animation for the graduation cap */
-                        @keyframes float {
-                            0% { transform: translateY(0px) rotate(0deg); }
-                            50% { transform: translateY(-15px) rotate(5deg); }
-                            100% { transform: translateY(0px) rotate(0deg); }
-                        }
-                        
-                        .graduation-cap {
-                            animation: float 3s ease-in-out infinite;
-                        }
-                        
-                        .profile-image-container:hover .graduation-cap {
-                            animation: float 2s ease-in-out infinite;
-                        }
-                    </style>
+                        <!-- Education Navigation -->
+                        <a href="{{ url_for('education') }}" class="social-icon" aria-label="Education" title="Education">
+                            <i class="fas fa-graduation-cap"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Profile Photo with Graduation Cap -->
+                <div class="col-lg-6 text-center mt-5 mt-lg-0" data-aos="fade-left">
+                    <div class="profile-image-container position-relative">
+                        <img src="{{ url_for('static', filename='images/profile.jpg') }}" 
+                             alt="{{ data.name }}" 
+                             class="img-fluid rounded-circle border border-4 border-white shadow-lg"
+                             style="max-width: 80%;">
+                        <div class="graduation-cap">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                    </div>
+                    <!-- Animated Background Elements -->
+                    <div class="floating-shapes">
+                        <div class="shape shape-1"></div>
+                        <div class="shape shape-2"></div>
+                        <div class="shape shape-3"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Scroll Down Indicator -->
+            <div class="row">
+                <div class="col-12 text-center" style="position: absolute; bottom: 80px; left: 0; right: 0;">
+                    <a href="#about" class="scroll-down" data-aos="fade-up" data-aos-delay="300">
+                        <div class="mouse mx-auto"></div>
+                        <div class="scroll-text mt-2">Scroll Down</div>
+                    </a>
                 </div>
             </div>
         </div>
     </div>
-    
-    <!-- Scroll Down Indicator -->
-    <div class="scroll-down" data-aos="fade-up" data-aos-delay="500" data-aos-offset="0">
-        <a href="#about">
-            <span></span>
-            <span></span>
-            <span></span>
-        </a>
-    </div>
 </section>
 
+<style>
+.lock-icon {
+    color: var(--primary);
+    font-size: 1.25rem;
+    transition: color 0.3s ease;
+}
+
+.lock-icon:hover, 
+.lock-icon:focus {
+    color: var(--primary-hover);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.btn-primary, .btn-outline-primary {
+  box-shadow: none;
+}
+
+    /* Remove background and shadows from button container */
+.d-flex.flex-wrap.gap-3.mb-4 {
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+}
+
+.button-group,
+.social-links,
+.d-flex,
+.gap-3,
+.mb-4,
+.mb-5 {
+  border: none !important;
+  border-top: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+.hero-section .container > div {
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+
+/* Remove background and shadows from social links container */
+.social-links {
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  flex-wrap: wrap;
+}
+
+/* Animated Background */
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 30% 40%, rgba(79, 70, 229, 0.1) 0%, transparent 50%);
+    z-index: 0;
+    animation: pulse 8s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.8; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.1); }
+}
+
+/* Floating Shapes */
+.floating-shapes {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.shape {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    animation: float 15s infinite linear;
+}
+
+.shape-1 {
+    width: 100px;
+    height: 100px;
+    top: 20%;
+    left: 10%;
+    animation-duration: 20s;
+    background: linear-gradient(45deg, rgba(79, 70, 229, 0.1), rgba(124, 58, 237, 0.1));
+}
+
+.shape-2 {
+    width: 150px;
+    height: 150px;
+    bottom: 10%;
+    right: 5%;
+    animation-duration: 25s;
+    animation-delay: -5s;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1));
+}
+
+.shape-3 {
+    width: 80px;
+    height: 80px;
+    top: 60%;
+    left: 15%;
+    animation-duration: 30s;
+    animation-delay: -10s;
+    background: linear-gradient(225deg, rgba(79, 70, 229, 0.1), rgba(67, 56, 202, 0.1));
+}
+
+@keyframes float {
+    0% { transform: translateY(0) rotate(0deg); }
+    25% { transform: translateY(-20px) rotate(5deg); }
+    50% { transform: translateY(0) rotate(0deg); }
+    75% { transform: translateY(20px) rotate(-5deg); }
+    100% { transform: translateY(0) rotate(0deg); }
+}
+
+/* Graduation Cap */
+.graduation-cap {
+    position: absolute;
+    bottom: -20px;
+    left: 70%;
+    transform: translateX(-50%);
+    background: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    animation: bounce 2s infinite;
+}
+
+.graduation-cap i {
+    font-size: 1.8rem;
+    background: linear-gradient(45deg, #4f46e5, #7c3aed);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: #000;
+    animation: swing 3s ease-in-out infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0) translateX(-50%); }
+    50% { transform: translateY(-10px) translateX(-50%); }
+}
+
+@keyframes swing {
+    0%, 100% { transform: rotate(-5deg); }
+    50% { transform: rotate(5deg); }
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+    position: fixed;
+    top: 1.5rem;
+    right: 1.5rem;
+    width: 2.8rem;
+    height: 2.8rem;
+    border: none;
+    border-radius: 50%;
+    background: var(--card-bg);
+    color: var(--text-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease, transform 0.2s ease;
+    padding: 0;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.theme-toggle:active {
+    transform: scale(0.95);
+}
+
+.theme-icon {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    width: 100%;
+    height: 100%;
+}
+
+.theme-icon.moon {
+    opacity: 1;
+    transform: rotate(0deg);
+}
+
+.theme-icon.sun {
+    opacity: 0;
+    transform: rotate(90deg);
+}
+
+.theme-toggle.active .moon {
+    opacity: 0;
+    transform: rotate(-90deg);
+}
+
+.theme-toggle.active .sun {
+    opacity: 1;
+    transform: rotate(0deg);
+}
+
+.theme-toggle i {
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+}
+
+.theme-toggle:hover i {
+    transform: rotate(30deg);
+}
+
+/* Hero Section */
+.hero-section {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, var(--background) 0%, var(--card-bg) 100%);
+    color: var(--text-color);
+    padding: 100px 0;
+    overflow: hidden;
+}
+
+.hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: var(--background);
+}
+
+.gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 30%, rgba(79, 70, 229, 0.1) 0%, transparent 50%);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+}
+
+.profile-image-container img {
+  box-shadow: 0 0 40px 10px rgba(124, 58, 237, 0.25),
+              0 0 80px 20px rgba(255, 255, 255, 0.13);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.profile-image-container img:hover {
+  animation: softShake 0.6s ease-in-out 1;
+  box-shadow: 0 0 60px 16px rgba(124, 58, 237, 0.40),
+              0 0 120px 28px rgba(255, 255, 255, 0.22);
+}
+
+@keyframes softShake {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(3deg);
+  }
+  50% {
+    transform: rotate(-3deg);
+  }
+  75% {
+    transform: rotate(2deg);
+  }
+}
+
+/* Typography */
+.greeting {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.25rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+.name-gradient {
+    background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: var(--primary);  /* Fallback for non-WebKit browsers */
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0.5rem 0;
+}
+
+/* Buttons */
+.btn {
+    border-radius: 50px;
+    font-weight: 500;
+    padding: 0.75rem 1.75rem;
+    transition: all 0.3s ease;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-outline-primary {
+    background: transparent;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+}
+
+.btn-outline-primary:hover {
+    background: var(--primary);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Social Icons */
+.social-links {
+    display: flex;
+    gap: 1rem;
+    margin: 2rem 0;
+    flex-wrap: wrap;
+}
+
+.social-icon {
+    color: var(--text-color);
+    font-size: 1.25rem;
+    transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+    color: var(--primary);
+    transform: translateY(-3px);
+}
+
+/* Profile Image */
+.profile-image-container {
+    position: relative;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.profile-image-container img {
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+    border: 4px solid white;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+
+/* Scroll Down Indicator */
+.scroll-down {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    text-align: center;
+}
+
+.mouse {
+    width: 24px;
+    height: 40px;
+    border: 2px solid var(--text-color);
+    border-radius: 12px;
+    position: relative;
+    margin: 0 auto;
+}
+
+.mouse::before {
+    content: '';
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    width: 4px;
+    height: 8px;
+    background: var(--primary);
+    border-radius: 2px;
+    animation: scroll 2s infinite;
+}
+
+.scroll-text {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+    letter-spacing: 1px;
+}
+
+/* Animations */
+@keyframes scroll {
+    0% {
+        transform: translate(-50%, 0);
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, 10px);
+        opacity: 0;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .hero-section {
+        text-align: center;
+        padding: 120px 0 80px;
+    }
+    
+    .greeting {
+        justify-content: center;
+    }
+    
+    .social-links {
+        justify-content: center;
+    }
+    
+    .profile-image-container {
+        max-width: 280px;
+        margin: 2rem auto 0;
+    }
+    
+    .scroll-down {
+        position: relative;
+        bottom: 0;
+        margin-top: 2rem;
+    }
+}
+</style>
+
 <!-- About Section -->
-<section id="about" class="py-5 position-relative overflow-hidden" style="background: linear-gradient(135deg, #f9f9ff 0%, #f0f2ff 100%);">
+<section id="about" class="py-5 position-relative overflow-hidden bg-light">
     <!-- Decorative Corner Elements -->
     <div class="corner-decor top-left">
         <div class="corner-circle"></div>
@@ -304,370 +657,210 @@
                             through photography, or reading about the latest tech trends and novels. I believe in 
                             continuous learning and pushing boundaries.
                         </p>
-                        <div class="text-muted">
+                        <div class="text-muted mb-4">
                             <i class="fas fa-map-marker-alt me-2"></i>
                             <span>{{ data.location }}</span>
                         </div>
-                        
-                        <div class="mt-4 text-center">
-    <div class="button-group">
-        <a href="{{ url_for('education') }}" class="custom-btn primary-btn">
-            <i class="fas fa-graduation-cap"></i>
-            <span>My Education</span>
-        </a>
-        <a href="{{ url_for('college_fest') }}" class="custom-btn secondary-btn">
-            <i class="fas fa-images"></i>
-            <span>College Memories</span>
-        </a>
-    </div>
-</div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
-    <!-- Scroll Down Indicator -->
-    <div class="scroll-down" data-aos="fade-up" data-aos-delay="500" data-aos-offset="0">
-        <a href="#experience">
-            <span></span>
-            <span></span>
-            <span></span>
-        </a>
-    </div>
-</section>
+</section>      
+
+
 
 <!-- Experience Section -->
-<section id="experience" class="py-5 section-with-rose position-relative w-100">
-    <!-- Work-related background elements -->
-    <div class="work-bg-elements">
-        <!-- Floating code snippets with different languages -->
-        <div class="code-snippet" data-speed="0.8">
-            <div class="code-header">
-                <span class="code-dot red"></span>
-                <span class="code-dot yellow"></span>
-                <span class="code-dot green"></span>
-                <span class="code-lang">python</span>
-            </div>
-            <pre><code class="language-python">def process_data():
-    # Data processing logic here
-    return insights</code></pre>
-        </div>
-        
-        <div class="code-snippet" data-speed="0.9" style="top: 60%; left: 10%;">
-            <div class="code-header">
-                <span class="code-dot red"></span>
-                <span class="code-dot yellow"></span>
-                <span class="code-dot green"></span>
-                <span class="code-lang">html</span>
-            </div>
-            <pre><code class="language-html">&lt;div class="project"&gt;
-  &lt;h2&gt;My Work&lt;/h2&gt;
-  &lt;p&gt;Interactive web solutions&lt;/p&gt;
-&lt;/div&gt;</code></pre>
-        </div>
-        
-        <div class="code-snippet" data-speed="1.1" style="top: 30%; right: 15%;">
-            <div class="code-header">
-                <span class="code-dot red"></span>
-                <span class="code-dot yellow"></span>
-                <span class="code-dot green"></span>
-                <span class="code-lang">css</span>
-            </div>
-            <pre><code class="language-css">.feature {
-  transition: all 0.3s ease;
-  transform: scale(1);
-  opacity: 1;
-}</code></pre>
-        </div>
-        
-        <!-- New code snippet -->
-        <div class="code-snippet" data-speed="1.05" style="top: 20%; left: 25%;">
-            <div class="code-header">
-                <span class="code-dot red"></span>
-                <span class="code-dot yellow"></span>
-                <span class="code-dot green"></span>
-                <span class="code-lang">javascript</span>
-            </div>
-            <pre><code class="language-javascript">function animateElements() {
-  gsap.to('.element', {
-    y: -20,
-    duration: 1.5,
-    repeat: -1,
-    yoyo: true,
-    ease: 'sine.inOut'
-  });
-}</code></pre>
-        </div>
-        
-        <!-- Work icons with different animations -->
-        <div class="work-icon" data-speed="1.2" data-tooltip="Coding">
-            <i class="fas fa-code"></i>
-        </div>
-        <div class="work-icon" data-speed="1.4" data-tooltip="Analytics">
-            <i class="fas fa-chart-line"></i>
-        </div>
-        <div class="work-icon" data-speed="1.1" data-tooltip="Database">
-            <i class="fas fa-database"></i>
-        </div>
-        <div class="work-icon" data-speed="1.3" style="top: 40%; right: 20%;" data-tooltip="Development">
-            <i class="fas fa-laptop-code"></i>
-        </div>
-        <div class="work-icon" data-speed="1.2" style="top: 75%; left: 20%;" data-tooltip="Architecture">
-            <i class="fas fa-project-diagram"></i>
-        </div>
-        <div class="work-icon" data-speed="1.25" style="top: 25%; left: 70%;" data-tooltip="Cloud">
-            <i class="fas fa-cloud"></i>
-        </div>
-        <div class="work-icon" data-speed="1.15" style="top: 65%; right: 30%;" data-tooltip="Testing">
-            <i class="fas fa-vial"></i>
-        </div>
-        
-        <!-- Animated connection lines -->
-        <svg class="connection-lines" width="100%" height="100%" style="position: absolute; top: 0; left: 0; z-index: 0; pointer-events: none;">
-            <line class="connection-line" x1="20%" y1="30%" x2="40%" y2="50%" />
-            <line class="connection-line" x1="60%" y1="40%" x2="70%" y2="60%" />
-            <line class="connection-line" x1="30%" y1="70%" x2="50%" y2="50%" />
-            <line class="connection-line" x1="70%" y1="25%" x2="60%" y2="40%" />
-            <line class="connection-line" x1="25%" y1="20%" x2="40%" y2="30%" />
-        </svg>
-        
-        <!-- Floating particles -->
-        <div class="floating-particles">
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-        </div>
+<section id="experience" class="py-5 section-with-rose position-relative w-100" style="background-color: var(--bg-color); transition: background-color 0.5s ease; overflow: visible;">
+    <!-- Animated background particles -->
+    <div class="experience-bg-particles">
+        <div class="particle" style="--size: 2px; --x: 10%; --y: 20%; --duration: 25s; --delay: 0s;"></div>
+        <div class="particle" style="--size: 3px; --x: 20%; --y: 70%; --duration: 30s; --delay: -5s;"></div>
+        <div class="particle" style="--size: 4px; --x: 80%; --y: 30%; --duration: 35s; --delay: -10s;"></div>
+        <div class="particle" style="--size: 2px; --x: 90%; --y: 60%; --duration: 28s; --delay: -7s;"></div>
+        <div class="particle" style="--size: 3px; --x: 50%; --y: 80%; --duration: 32s; --delay: -12s;"></div>
+        <div class="particle" style="--size: 4px; --x: 60%; --y: 40%; --duration: 29s; --delay: -8s;"></div>
+        <div class="particle" style="--size: 2px; --x: 30%; --y: 50%; --duration: 26s; --delay: -15s;"></div>
+        <div class="particle" style="--size: 3px; --x: 70%; --y: 20%; --duration: 31s; --delay: -18s;"></div>
     </div>
     
+    <!-- Animated floating words -->
+    <div class="floating-words">
+        <span data-word="Code" style="--i:1; --x:15%; --y:20%;">Code</span>
+        <span data-word="Develop" style="--i:2; --x:25%; --y:50%;">Develop</span>
+        <span data-word="Create" style="--i:3; --x:75%; --y:30%;">Create</span>
+        <span data-word="Design" style="--i:4; --x:85%; --y:70%;">Design</span>
+        <span data-word="Build" style="--i:5; --x:50%; --y:80%;">Build</span>
+        <span data-word="Innovate" style="--i:6; --x:60%; --y:40%;">Innovate</span>
+    </div>
+
     <style>
-        .work-bg-elements {
+        .experience-bg-particles {
             position: absolute;
-            width: 100%;
-            height: 100%;
             top: 0;
             left: 0;
+            width: 100%;
+            height: 100%;
             overflow: hidden;
             z-index: 0;
             pointer-events: none;
         }
-        
-        /* Code snippet styling */
-        .code-snippet {
-            position: absolute;
-            font-size: 0.7rem;
-            color: #3a4a6d; /* Darker text color for better contrast */
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-radius: 8px;
-            padding: 0;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
-            border: 1px solid rgba(13, 110, 253, 0.2);
-            transform: rotate(-3deg);
-            max-width: 250px;
-            z-index: 1;
-            animation: float 15s ease-in-out infinite, pulse 8s ease-in-out infinite;
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-            overflow: hidden;
-        }
-        
-        .code-header {
-            display: flex;
-            align-items: center;
-            padding: 6px 10px;
-            background: rgba(0, 0, 0, 0.03);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-        }
-        
-        .code-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            margin-right: 5px;
-            position: relative;
-        }
-        
-        .code-dot.red { background: #ff5f56; }
-        .code-dot.yellow { background: #ffbd2e; }
-        .code-dot.green { background: #27c93f; }
-        
-        .code-lang {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 0.6rem;
-            color: #666;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .code-snippet pre {
-            margin: 0;
-            padding: 12px;
-            background: transparent !important;
-            line-height: 1.5;
-        }
-        
-        .code-snippet code {
-            color: #3a4a6d;
-            font-family: 'Fira Code', 'Courier New', monospace;
-            font-size: 0.8em;
-        }
-        
-        .code-snippet:hover {
-            transform: scale(1.05) rotate(-1deg) translateY(-5px);
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.18);
-            border-color: rgba(13, 110, 253, 0.3);
-            z-index: 10;
-            background: white;
-        }
-        
-        /* Work icons styling */
-        .work-icon {
-            position: absolute;
-            font-size: 1.8rem;
-            color: #0d6efd; /* Brighter default color */
-            z-index: 0;
-            animation: float 15s ease-in-out infinite, pulse 10s ease-in-out infinite;
-            text-shadow: 0 2px 15px rgba(13, 110, 253, 0.2);
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-            cursor: default;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.95);
-            box-shadow: 0 5px 20px rgba(13, 110, 253, 0.15);
-            border: 1px solid rgba(13, 110, 253, 0.1);
-        }
-        
-        .work-icon::after {
-            content: attr(data-tooltip);
-            position: absolute;
-            bottom: 100%;
-            left: 50%;
-            transform: translateX(-50%) translateY(10px);
-            background: #333;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-size: 0.7rem;
-            white-space: nowrap;
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-        
-        .work-icon:hover {
-            color: #0a58ca;
-            transform: scale(1.25) translateY(-3px);
-            box-shadow: 0 10px 30px rgba(13, 110, 253, 0.25);
-            background: white;
-        }
-        
-        .work-icon:hover::after {
-            opacity: 1;
-            transform: translateX(-50%) translateY(-5px);
-        }
-        
-        /* Position work icons */
-        .work-icon:nth-child(1) { top: 15%; left: 10%; animation-delay: -2s; }
-        .work-icon:nth-child(2) { top: 70%; left: 85%; animation-delay: -5s; }
-        .work-icon:nth-child(3) { top: 80%; left: 15%; animation-delay: -7s; }
-        .work-icon:nth-child(4) { top: 40%; right: 20%; animation-delay: -3s; }
-        .work-icon:nth-child(5) { top: 75%; left: 20%; animation-delay: -4s; }
-        .work-icon:nth-child(6) { top: 25%; left: 70%; animation-delay: -6s; }
-        .work-icon:nth-child(7) { top: 65%; right: 30%; animation-delay: -8s; }
-        
-        /* Connection lines */
-        .connection-lines {
-            stroke: rgba(13, 110, 253, 0.15);
-            stroke-width: 1.5;
-            stroke-dasharray: 5, 5;
-            animation: dash 30s linear infinite;
-            filter: drop-shadow(0 0 1px rgba(13, 110, 253, 0.3));
-        }
-        
-        /* Floating particles */
-        .floating-particles {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-        }
-        
+
         .particle {
             position: absolute;
-            background: rgba(13, 110, 253, 0.15);
+            background: var(--primary);
             border-radius: 50%;
-            pointer-events: none;
-            animation: float-particle 20s linear infinite;
-            box-shadow: 0 0 15px rgba(13, 110, 253, 0.2);
+            opacity: 0.3;
+            filter: blur(1px) drop-shadow(0 0 3px var(--primary));
+            animation: float-particle var(--duration, 25s) ease-in-out infinite;
+            animation-delay: var(--delay, 0s);
+            width: var(--size, 3px);
+            height: var(--size, 3px);
+            left: var(--x, 0);
+            top: var(--y, 0);
+            transition: all 0.5s ease;
         }
-        
-        .particle:nth-child(1) { width: 5px; height: 5px; top: 10%; left: 15%; animation-duration: 25s; }
-        .particle:nth-child(2) { width: 8px; height: 8px; top: 80%; left: 80%; animation-duration: 30s; animation-delay: -5s; }
-        .particle:nth-child(3) { width: 4px; height: 4px; top: 60%; left: 25%; animation-duration: 35s; animation-delay: -10s; }
-        .particle:nth-child(4) { width: 6px; height: 6px; top: 30%; left: 70%; animation-duration: 28s; animation-delay: -7s; }
-        .particle:nth-child(5) { width: 7px; height: 7px; top: 75%; left: 40%; animation-duration: 32s; animation-delay: -12s; }
-        .particle:nth-child(6) { width: 5px; height: 5px; top: 20%; left: 50%; animation-duration: 29s; animation-delay: -8s; }
-        .particle:nth-child(7) { width: 6px; height: 6px; top: 65%; left: 60%; animation-duration: 26s; animation-delay: -15s; }
-        .particle:nth-child(8) { width: 4px; height: 4px; top: 40%; left: 30%; animation-duration: 31s; animation-delay: -18s; }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-15px) rotate(2deg); }
-        }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 0.7; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.1); }
-        }
-        
-        @keyframes dash {
-            to { stroke-dashoffset: 1000; }
-        }
-        
+
         @keyframes float-particle {
-            0% { transform: translateY(0) translateX(0); opacity: 0; }
-            10% { opacity: 0.3; }
-            90% { opacity: 0.3; }
-            100% { transform: translateY(-100px) translateX(30px); opacity: 0; }
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg);
+                opacity: 0.3;
+            }
+            10%, 90% {
+                opacity: 0.5;
+            }
+            50% {
+                transform: translate(50px, -100px) rotate(180deg);
+                opacity: 0.7;
+            }
         }
-        
+
+        .floating-words {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .floating-words span {
+            position: absolute;
+            color: var(--primary);
+            font-size: 1.5rem;
+            font-weight: 600;
+            opacity: 0.15;
+            animation: floatWord 15s linear infinite;
+            animation-delay: calc(var(--i) * 2s);
+            left: var(--x);
+            top: var(--y);
+            transform: translate(-50%, -50%);
+            white-space: nowrap;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.5s ease;
+            font-family: 'Poppins', sans-serif;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            will-change: transform, opacity;
+        }
+
+        @keyframes floatWord {
+            0% {
+                transform: translate(-50%, -50%) rotate(0) scale(1) translateY(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.15;
+                transform: translate(-50%, -50%) rotate(2deg) scale(1.05);
+            }
+            90% {
+                opacity: 0.15;
+                transform: translate(-50%, -50%) rotate(-2deg) scale(0.95);
+            }
+            100% {
+                transform: translate(-50%, -150%) rotate(0) scale(0.9);
+                opacity: 0;
+            }
+        }
+
         .experience-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             z-index: 1;
-            background: rgba(255, 255, 255, 0.9) !important;
+            background: var(--card-bg) !important;
             backdrop-filter: blur(5px);
-            border: 1px solid rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            cursor: pointer;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
         }
-        
+
+        .experience-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--primary);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+            z-index: 2;
+        }
+
         .experience-card:hover {
+            transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15) !important;
+        }
+
+        .experience-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .experience-card .card-body {
+            position: relative;
+            z-index: 1;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .experience-card:hover .card-body {
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        .experience-card h4 {
+            position: relative;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .experience-card h4::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .experience-card:hover h4::after {
+            width: 100%;
         }
     </style>
+
     <div class="container section-content">
-        <div class="text-center mb-5">
-            <span class="text-primary fw-bold d-block mb-2">My Professional Journey</span>
-            <h2 class="display-5 fw-bold">
+        <div class="text-center mb-5" data-aos="fade-up" data-aos-duration="800">
+            <span class="text-primary fw-bold d-block mb-2 animate-charcter">My Professional Journey</span>
+            <h2 class="display-5 fw-bold heading-animation">
                 <i class="fas fa-briefcase text-primary me-2"></i>Work Experience
             </h2>
-            <p class="text-muted">My professional growth through internships and projects</p>
+            <p class="text-muted text-animation">My professional growth through internships and projects</p>
         </div>
 
         <div class="row g-4">
@@ -683,8 +876,7 @@
                             <span class="date-badge">June 2025 - July 2025</span>
                         </div>
                         <ul class="mb-0">
-                            <li>Created interactive dashboards for in-depth data analysis
-                                </li>
+                            <li>Created interactive dashboards for in-depth data analysis</li>
                             <li>Transformed raw data into meaningful insights</li>
                             <li>Collaborated with team members on requirements</li>
                         </ul>
@@ -733,28 +925,19 @@
             </div>
         </div>
     </div>
-    
-    <!-- Scroll Down Indicator -->
-    <div class="scroll-down" data-aos="fade-up" data-aos-delay="500" data-aos-offset="0">
-        <a href="#skills">
-            <span></span>
-            <span></span>
-            <span></span>
-        </a>
-    </div>
 </section>
 
 
+
+
+
 <!-- Skills Section -->
-<section id="skills" class="py-5 bg-light section-with-rose position-relative">
-    <div class="rose-bg">
-        <div class="rose-petal"></div>
-        <div class="rose-petal"></div>
-        <div class="rose-petal"></div>
-        <div class="rose-petal"></div>
-        <div class="rose-petal"></div>
-    </div>
-    <div class="container section-content">
+<section id="skills" class="py-5 bg-light">
+    <!-- Animated Tech Icons Background -->
+    <div class="tech-icons-bg"></div>
+
+    <!-- Content -->
+    <div class="container section-content position-relative" style="z-index: 2;">
         <div class="text-center">
             <span class="text-primary fw-bold d-block mb-2">My Expertise</span>
             <h2 class="display-5 fw-bold">
@@ -763,9 +946,9 @@
             <p class="text-muted mb-5">Technologies I've been working with recently</p>
         </div>
 
+        <!-- Skill Tabs -->
         <div class="row">
             <div class="col-12">
-                <!-- Tab Menu with Animation -->
                 <div class="d-flex justify-content-center mb-4 skills-tab-menu" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
                     <div class="btn-group" role="group" aria-label="Skills navigation">
                         <button type="button" class="btn btn-outline-primary active" onclick="filterSkills('languages')">
@@ -779,8 +962,8 @@
                         </button>
                     </div>
                 </div>
-                
-                <!-- Skills Container -->
+
+                <!-- Skills Cards -->
                 <div class="row g-4" id="skills-container">
                     {% for category, skills in data.skills.items() %}
                         {% for skill in skills %}
@@ -798,8 +981,8 @@
                                         <h6 class="card-title mb-0">{{ skill.name }}</h6>
                                         {% if skill.level %}
                                         <div class="progress mt-2">
-                                            <div class="progress-bar" 
-                                                 role="progressbar" 
+                                            <div class="progress-bar"
+                                                 role="progressbar"
                                                  style="width: 0%"
                                                  data-width="{{ skill.level }}"
                                                  {% if skill_color %}data-color="{{ skill_color }}"{% endif %}>
@@ -818,6 +1001,7 @@
         </div>
     </div>
 </section>
+
 
 <script>
 function filterSkills(category) {
@@ -846,7 +1030,6 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 
-<!-- Projects Section -->
 <section id="projects" class="py-5 section-with-rose position-relative">
     <div class="rose-bg">
         <div class="rose-petal"></div>
@@ -854,7 +1037,9 @@ document.addEventListener('DOMContentLoaded', function() {
         <div class="rose-petal"></div>
         <div class="rose-petal"></div>
         <div class="rose-petal"></div>
+        <div class="rose-petal"></div>
     </div>
+
     <div class="container section-content">
         <div class="text-center mb-5">
             <span class="text-primary fw-bold d-block mb-2">My Work</span>
@@ -863,15 +1048,14 @@ document.addEventListener('DOMContentLoaded', function() {
             </h2>
             <p class="text-muted">Click on any console to interact</p>
         </div>
-        
         <div class="row g-4">
             {% for project in data.projects %}
             <div class="col-lg-6 mb-3">
                 <div class="project-console" data-project-id="{{ loop.index }}" 
-                     data-description="{{ project.description }}" 
-                     data-tech="{{ project.tech|join(',') }}" 
-                     data-github="{{ project.github or '' }}"
-                     data-expanded="false">
+                    data-description="{{ project.description }}" 
+                    data-tech="{{ project.tech|join(', ') }}" 
+                    data-github="{{ project.github or '' }}"
+                    data-expanded="false">
                     <div class="terminal-header">
                         <div class="terminal-buttons">
                             <span class="terminal-btn terminal-btn-close"></span>
@@ -882,22 +1066,33 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                     <div class="terminal-body">
                         <div class="terminal-line">
-                            <span class="terminal-prompt">user@portfolio:~$</span>
-                            <span class="terminal-command"></span>
-                            <span class="cursor">█</span>
+                            <span class="terminal-prompt">user@portfolio</span><span class="terminal-command"></span><span class="cursor"></span>
                         </div>
-                        <div class="terminal-output" style="display: none;">
-                            <div class="terminal-line">
-                                <span class="terminal-text"></span>
-                                <span class="cursor">█</span>
-                            </div>
-                            <div class="tech-stack">
-                                {% for tech in project.tech %}
-                                <span class="tech-badge">{{ tech }}</span>
-                                {% endfor %}
-                            </div>
+                        <ul class="project-points" style="display:none; margin-top: 8px; padding-left: 18px;">
+    {% for point in project.short_description %}
+    <li>{{ point }}</li>
+    {% endfor %}
+</ul>
+
+                        <div class="tech-stack mt-2" style="display:none;">
+                            {% for tech in project.tech %}
+                            <span class="tech-badge">{{ tech }}</span>
+                            {% endfor %}
+                        </div>
+                        <div class="project-links" style="display:none; margin-top: 10px;">
                             {% if project.github %}
-                        <a href="{{ project.github }}" target="_blank" class="github-link">
+                            <a href="{{ project.github }}" target="_blank" class="btn btn-sm btn-outline-light me-2">
+                                <i class="fab fa-github me-1"></i> GitHub
+                            </a>
+                            {% endif %}
+                            {% if project.website %}
+                            <a href="{{ project.website }}" target="_blank" class="btn btn-sm btn-primary">
+                                <i class="fas fa-external-link-alt me-1"></i> Visit Website
+                            </a>
+                            {% endif %}
+                        </div>
+                        {% if project.github %}
+                        <a href="{{ project.github }}" target="_blank" class="github-link" style="display:none;">
                             <i class="fab fa-github"></i> View on GitHub
                         </a>
                         {% endif %}
@@ -906,409 +1101,224 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
             {% endfor %}
         </div>
+    </div>
+
+
 <style>
-    /* VS Code Dark Theme Terminal */
-    .project-console {
-        background: #1e1e1e;
-        border-radius: 6px;
-        overflow: hidden;
-        color: #d4d4d4;
-        font-family: 'Fira Code', 'Consolas', 'Courier New', monospace;
-        position: relative;
-        margin-bottom: 20px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-        cursor: default;
-        border: 1px solid #3c3c3c;
-    }
-    
-    .project-console:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-    }
-    
-    /* Terminal Header */
-    .terminal-header {
-        background: #252526;
-        padding: 6px 12px;
-        display: flex;
-        align-items: center;
-        border-top-left-radius: 6px;
-        border-top-right-radius: 6px;
-        border-bottom: 1px solid #1e1e1e;
-    }
-    
-    .terminal-buttons {
-        display: flex;
-        gap: 6px;
-        margin-right: 10px;
-    }
-    
-    .terminal-btn {
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-        display: inline-block;
-    }
-    
-    .terminal-btn-close { background: #ff5f56; }
-    .terminal-btn-minimize { background: #ffbd2e; }
-    .terminal-btn-maximize { background: #27c93f; }
-    
-    .terminal-title {
-        color: #d4d4d4;
-        font-size: 0.8rem;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-    
-    /* Terminal Body */
-    .terminal-body {
-        padding: 12px;
-        min-height: 100px;
-        background: #1e1e1e;
-        line-height: 1.5;
-    }
-    
-    .terminal-line {
-        display: flex;
-        align-items: center;
-        margin-bottom: 4px;
-        min-height: 20px;
-    }
-    
-    .terminal-prompt {
-        color: #9cdcfe;
-        margin-right: 8px;
-        white-space: nowrap;
-    }
-    
-    .terminal-command {
-        color: #ce9178;
-        white-space: pre-wrap;
-        word-break: break-word;
-    }
-    
-    .terminal-text {
-        color: #d4d4d4;
-        white-space: pre-wrap;
-        word-break: break-word;
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        line-clamp: 3;  /* Standard property for compatibility */
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        line-height: 1.5;
-    }
-    
-    .cursor {
-        display: inline-block;
-        width: 8px;
-        height: 16px;
-        background-color: #569cd6;
-        margin-left: 2px;
-        animation: blink 1s step-end infinite;
-        vertical-align: middle;
-    }
-    
-    @keyframes blink {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0; }
-    }
-    
-    .terminal-output {
-        margin-top: 8px;
-        padding-top: 8px;
-        border-top: 1px solid #333;
-    }
-    
-    .tech-stack {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 6px;
-        margin: 12px 0 8px;
-    }
-    
-    .tech-badge {
-        background: rgba(83, 89, 93, 0.3);
-        color: #9cdcfe;
-        padding: 2px 6px;
-        border-radius: 2px;
-        font-size: 0.7rem;
-        border: 1px solid rgba(124, 124, 124, 0.3);
-        font-family: 'Fira Code', 'Consolas', 'Courier New', monospace;
-    }
-    
-    .github-link {
-        display: inline-flex;
-        align-items: center;
-        color: #569cd6;
-        text-decoration: none;
-        font-size: 0.8rem;
-        margin-top: 8px;
-        font-family: 'Fira Code', 'Consolas', 'Courier New', monospace;
-        transition: color 0.2s ease;
-    }
-    
-    .github-link i {
-        margin-right: 6px;
-    }
-    
-    .github-link:hover {
-        color: #4ec9b0;
-        text-decoration: underline;
-    }
-    
-    /* Animation for typing effect */
-    @keyframes typing {
-        from { width: 0 }
-        to { width: 100% }
-    }
-    
-        @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(5px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-    
-    @keyframes blink-caret {
-        from, to { border-color: transparent }
-        50% { border-color: #333; }
-    }
-    
-    /* Expanded state */
-    .project-console[data-expanded="true"] {
-        padding-bottom: 20px;
-    }
-    
-    .project-console[data-expanded="true"] .console-content {
-        display: block;
-    }
-    
-    .project-console[data-expanded="true"] .cursor {
-        display: none;
-    }
-    
-    @keyframes blink {
-        from, to { opacity: 1; }
-        50% { opacity: 0; }
-    }
-    
-    /* Standard line-clamp fallback */
-    .console-description {
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        line-clamp: 2;
-    }
+.project-console {
+    background: #1e1e1e;
+    border-radius: 6px;
+    overflow: hidden;
+    color: #d4d4d4;
+    font-family: 'Fira Code', Consolas, 'Courier New', monospace;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    cursor: default;
+    border: 1px solid #3c3c3c;
+}
+.project-console:hover {
+  box-shadow: 0 0 15px 3px #569cd6cc; /* glowing blue shadow */
+  transform: scale(1.02);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  z-index: 3;
+}
+.project-points li {
+    margin-bottom: 4px;
+    font-size: 0.85rem;
+    color: #b0b0b0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.terminal-header {
+    background: #252526;
+    padding: 6px 12px;
+    display: flex;
+    align-items: center;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    border-bottom: 1px solid #1e1e1e;
+}
+.terminal-buttons span {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 8px;
+}
+.terminal-btn-close { background: #ff5f56; }
+.terminal-btn-minimize { background: #ffbd2e; }
+.terminal-btn-maximize { background: #27c93f; }
+.terminal-title {
+    color: #d4d4d4;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.terminal-body {
+    padding: 12px;
+    min-height: 100px;
+    background: #1e1e1e;
+    line-height: 1.5;
+}
+.terminal-line {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+    min-height: 20px;
+}
+.terminal-prompt {
+    color: #9cdcfe;
+    margin-right: 8px;
+    white-space: nowrap;
+}
+.terminal-command {
+    color: #ce9178;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+.terminal-text {
+    color: #d4d4d4;
+    white-space: pre-wrap;
+    word-break: break-word;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.5;
+}
+.cursor {
+    display: inline-block;
+    width: 8px;
+    height: 16px;
+    background-color: #569cd6;
+    margin-left: 2px;
+    animation: blink 1s step-end infinite;
+    vertical-align: middle;
+}
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+.tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 12px 0 8px;
+}
+.tech-badge {
+    background: rgba(83, 89, 93, 0.3);
+    color: #9cdcfe;
+    padding: 2px 6px;
+    border-radius: 2px;
+    font-size: 0.7rem;
+    border: 1px solid rgba(124, 124, 124, 0.3);
+    font-family: 'Fira Code', Consolas, 'Courier New', monospace;
+}
+.github-link {
+    display: inline-flex;
+    align-items: center;
+    color: #569cd6;
+    text-decoration: none;
+    font-size: 0.8rem;
+    margin-top: 8px;
+    font-family: 'Fira Code', Consolas, 'Courier New', monospace;
+    transition: color 0.2s ease;
+}
+.github-link i {
+    margin-right: 6px;
+}
+.github-link:hover {
+    color: #4ec9b0;
+    text-decoration: underline;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tech-badge {
+  opacity: 0;
+  animation-name: fadeInUp;
+  animation-duration: 0.6s;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-out;
+}
+
+.tech-badge:nth-child(1) { animation-delay: 0.1s; }
+.tech-badge:nth-child(2) { animation-delay: 0.2s; }
+.tech-badge:nth-child(3) { animation-delay: 0.3s; }
+.tech-badge:nth-child(4) { animation-delay: 0.4s; }
+.tech-badge:nth-child(5) { animation-delay: 0.5s; }
+
 </style>
 
 <script>
-    // Initialize terminal consoles with typing effect
-    document.addEventListener('DOMContentLoaded', function() {
-        const consoles = document.querySelectorAll('.project-console');
-        
-        consoles.forEach((consoleEl, index) => {
-            const command = consoleEl.querySelector('.terminal-command');
-            const output = consoleEl.querySelector('.terminal-text');
-            const title = consoleEl.querySelector('.terminal-title').textContent.replace('bash - ', '');
-            const description = consoleEl.getAttribute('data-description');
-            const isFirstProject = index === 0;
-            const prompt = isFirstProject ? 'user@Dashboard' : 'user@Terminal';
-            consoleEl.querySelector('.terminal-prompt').textContent = `${prompt} $`;
-            const commandText = `echo "${title}"`;
-            
-            let i = 0;
-            let j = 0;
-            let isTypingCommand = true;
-            
-            // Typewriter effect for project name and description
-            function typeCommand() {
-                let charIndex = 0;
-                const typeName = () => {
-                    if (charIndex < commandText.length) {
-                        command.textContent = commandText.substring(0, charIndex + 1);
-                        charIndex++;
-                        setTimeout(typeName, 50);
-                    } else {
-                        // Start typing description after name is fully typed
-                        setTimeout(() => {
-                            output.textContent = '';
-                            typeDescription();
-                        }, 200);
-                    }
-                };
-                typeName();
+document.addEventListener('DOMContentLoaded', function() {
+    const consoles = document.querySelectorAll('.project-console');
+    consoles.forEach((consoleEl, index) => {
+        const command = consoleEl.querySelector('.terminal-command');
+        const output = consoleEl.querySelector('.terminal-text');
+        const title = consoleEl.querySelector('.terminal-title').textContent.replace('bash - ', '');
+        const description = consoleEl.getAttribute('data-description');
+        const techStack = consoleEl.querySelector('.tech-stack');
+        const githubLink = consoleEl.querySelector('.github-link');
+        // Type command animation
+        let charIndex = 0;
+        const commandText = `echo ${title}`;
+        function typeCommand() {
+            if (charIndex < commandText.length) {
+                command.textContent = commandText.substring(0, charIndex + 1);
+                charIndex++;
+                setTimeout(typeCommand, 50);
+            } else {
+                setTimeout(typeDescription, 200);
             }
-            
-            // Type the description with typewriter effect
-            function typeDescription() {
-                let descIndex = 0;
-                const typeDesc = () => {
-                    if (descIndex < description.length) {
-                        output.textContent = description.substring(0, descIndex + 1);
-                        descIndex++;
-                        output.scrollTop = output.scrollHeight;
-                        
-                        // Random delay between keystrokes (30-70ms) for more natural typing
-                        const delay = Math.floor(Math.random() * 40) + 30;
-                        setTimeout(typeDesc, delay);
-                    } else {
-                        // Show tech stack and GitHub link after description is fully typed
-                        showProjectLinks();
-                    }
-                };
-                
-                // Start typing description
-                typeDesc();
-                
-                function showProjectLinks() {
-                    const techStack = consoleEl.querySelector('.tech-stack');
-                    const githubLink = consoleEl.querySelector('.github-link');
-                    
-                    if (techStack) {
-                        techStack.style.display = 'flex';
-                        techStack.style.animation = 'fadeIn 0.5s ease-in-out';
-                    }
-                    if (githubLink) {
-                        githubLink.style.display = 'inline-flex';
-                        githubLink.style.animation = 'fadeIn 0.5s ease-in-out';
-                    }
-                    
-                    // Hide cursor when done
-                    setTimeout(() => {
-                        output.parentElement.querySelector('.cursor').style.display = 'none';
-                    }, 200);
-                }
-            }
-            
-            // Start the sequence immediately
-            typeCommand();
-        });
-    });
-    
-    // Toggle project details on click
-    document.querySelectorAll('.project-item').forEach(item => {
-        item.addEventListener('click', () => {
-            const details = item.querySelector('.project-details');
-            const isVisible = details.style.display === 'block';
-            
-            // Close all other open project details
-            document.querySelectorAll('.project-details').forEach(d => {
-                d.style.display = 'none';
-            });
-            
-            // Toggle current project details
-            details.style.display = isVisible ? 'none' : 'block';
-        });
-    });
-    
-// Terminal typewriter effect for multiple projects
-function initTerminals() {
-    console.log('Initializing terminals...');
-    const terminals = document.querySelectorAll('.project-console');
-    
-    if (terminals.length === 0) {
-        console.error('No terminal elements found');
-        return;
-    }
-    
-    // Project configurations
-    const projectConfigs = [
-        {
-            command: 'cd Sophisticated-Admin-Dashboard-for-Bot-Performance-Evaluation',
-            descriptions: [
-                '• Comprehensive dashboard for monitoring bot performance metrics',
-                '• Real-time analytics and visualization of key performance indicators',
-                '• User-friendly interface with customizable dashboards and reports'
-            ]
-        },
-        {
-            command: 'echo Portfolio',
-            descriptions: [
-                '• Advanced web application with real-time features',
-                '• Built with React and Node.js',
-                '• Implements modern UI/UX principles'
-            ]
         }
-    ];
-    
-    terminals.forEach((terminal, index) => {
-        const config = projectConfigs[index] || projectConfigs[0]; // Fallback to first config if not enough configs
-        setupTerminal(terminal, config);
-    });
+        // Type description animation
+        let descIndex = 0;
+        function typeDescription() {
+            if (descIndex < description.length) {
+                output.textContent += description.charAt(descIndex);
+                descIndex++;
+                output.parentElement.scrollTop = output.parentElement.scrollHeight;
+                setTimeout(typeDescription, Math.random() * 40 + 30);
+            } else {
+                techStack.style.display = 'flex';
+                if (githubLink) githubLink.style.display = 'inline-flex';
+                // Hide cursor
+                const cursor = consoleEl.querySelector('.cursor');
+                if (cursor) cursor.style.display = 'none';
+            }
+        }
+        // After typing description completes 
+techStack.style.display = 'flex';
+const pointsEl = consoleEl.querySelector('.project-points');
+if(pointsEl) {
+    pointsEl.style.display = 'block';
+}
+if (githubLink) {
+    githubLink.style.opacity = 0;
+    githubLink.style.display = 'inline-flex';
+    setTimeout(() => {
+        githubLink.style.transition = 'opacity 0.5s ease';
+        githubLink.style.opacity = 1;
+    }, 100);  // Reduced delay for faster display
 }
 
-function setupTerminal(terminal, config) {
-    const commandLine = terminal.querySelector('.terminal-line');
-    const commandText = terminal.querySelector('.terminal-command');
-    const cursor = commandLine ? commandLine.querySelector('.cursor') : null;
-    const outputSection = terminal.querySelector('.terminal-output');
-    const outputText = outputSection ? outputSection.querySelector('.terminal-text') : null;
-    
-    if (!commandText || !outputSection || !outputText) {
-        console.error('Required terminal elements not found');
-        return;
-    }
-    
-    // Show the output section
-    outputSection.style.display = 'block';
-    
-    // Clear any existing content
-    commandText.textContent = '';
-    outputText.innerHTML = ''; // Use innerHTML to support line breaks
-    
-    // Type the command
-    let charIndex = 0;
-    function typeCommand() {
-        if (charIndex < config.command.length) {
-            commandText.textContent = config.command.substring(0, charIndex + 1);
-            charIndex++;
-            setTimeout(typeCommand, 50);
-        } else if (cursor) {
-            cursor.style.display = 'none';
-            setTimeout(() => typeDescription(0), 300);
-        }
-    }
-    
-    // Type the descriptions with line breaks
-    function typeDescription(descIndex, charIndex = 0) {
-        if (descIndex >= config.descriptions.length) {
-            if (outputSection.querySelector('.cursor')) {
-                outputSection.querySelector('.cursor').style.display = 'inline-block';
-            }
-            return;
-        }
-        
-        const currentDesc = config.descriptions[descIndex];
-        
-        if (charIndex < currentDesc.length) {
-            const currentText = outputText.textContent || '';
-            const newText = currentDesc.substring(0, charIndex + 1);
-            outputText.innerHTML = (descIndex > 0 ? currentText + '<br>' : '') + newText;
-            
-            setTimeout(() => typeDescription(descIndex, charIndex + 1), Math.random() * 30 + 20);
-        } else {
-            // Move to next description after a delay
-            setTimeout(() => typeDescription(descIndex + 1, 0), 200);
-        }
-    }
-    
-    // Start the effect with a staggered delay based on terminal index
-    const delay = 1000 + (Array.from(terminal.parentNode.parentNode.children).indexOf(terminal.parentNode) * 1000);
-    setTimeout(typeCommand, delay);
-}
-
-// Run after the DOM is fully loaded
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initTerminals);
-} else {
-    initTerminals();
-}
+        typeCommand();
+    });
+});
 </script>
-
-
 </section>
 
 <!-- Achievements Section -->
@@ -1466,7 +1476,16 @@ if (document.readyState === 'loading') {
 
 
 <!-- Travel Section -->
-<section id="travel" class="py-5" data-aos="fade-up" data-aos-offset="200" data-aos-easing="ease-in-sine" data-aos-duration="1000">
+<section id="travel" class="py-5 position-relative section-with-rose" data-aos="fade-up" data-aos-offset="200" data-aos-easing="ease-in-sine" data-aos-duration="1000">
+    <!-- Rose Animation Background -->
+    <div class="rose-bg">
+        <div class="rose-petal"></div>
+        <div class="rose-petal"></div>
+        <div class="rose-petal"></div>
+        <div class="rose-petal"></div>
+        <div class="rose-petal"></div>
+    </div>
+    <div class="container position-relative" style="z-index: 2;">
     <div class="container">
         <div class="text-center">
             <span class="text-primary fw-bold d-block mb-2">My Adventures</span>
@@ -1497,18 +1516,19 @@ if (document.readyState === 'loading') {
         </div>
     </div>
     
-    <!-- Scroll Down Indicator -->
-    <div class="scroll-down" data-aos="fade-up" data-aos-delay="500" data-aos-offset="0">
-        <a href="#hobbies">
-            <span></span>
-            <span></span>
-            <span></span>
-        </a>
-    </div>
 </section>
 
 <!-- Hobbies Section -->
-<section id="hobbies" class="py-5 bg-light" data-aos="fade-up" data-aos-offset="200" data-aos-easing="ease-in-sine" data-aos-duration="1000">
+<section id="hobbies" class="py-5 bg-light position-relative section-with-rose" data-aos="fade-up" data-aos-offset="200" data-aos-easing="ease-in-sine" data-aos-duration="1000">
+    <!-- Rose Animation Background -->
+    <div class="rose-bg">
+        <div class="rose-petal"></div>
+        <div class="rose-petal"></div>
+        <div class="rose-petal"></div>
+        <div class="rose-petal"></div>
+        <div class="rose-petal"></div>
+    </div>
+    <div class="container position-relative" style="z-index: 2;">
     <div class="container">
         <div class="text-center">
             <span class="text-primary fw-bold d-block mb-2">My Interests</span>
@@ -1553,15 +1573,6 @@ if (document.readyState === 'loading') {
             </div>
             {% endfor %}
         </div>
-    </div>
-    
-    <!-- Scroll Down Indicator -->
-    <div class="scroll-down" data-aos="fade-up" data-aos-delay="500" data-aos-offset="0">
-        <a href="#contact">
-            <span></span>
-            <span></span>
-            <span></span>
-        </a>
     </div>
 </section>
 
@@ -1657,15 +1668,6 @@ if (document.readyState === 'loading') {
                 </div>
             </div>
         </div>
-    </div>
-    
-    <!-- Back to Top Button (only on contact section) -->
-    <div class="scroll-down" data-aos="fade-up" data-aos-delay="500" data-aos-offset="0">
-        <a href="#home">
-            <span></span>
-            <span></span>
-            <span></span>
-        </a>
     </div>
 </section>
 
@@ -1827,11 +1829,6 @@ if (document.readyState === 'loading') {
                         <span></span>
                     </a>
                 `;
-                
-                // Only add if not already present
-                if (!section.querySelector('.scroll-down')) {
-                    section.appendChild(scrollDown);
-                }
             }
         });
     });
@@ -1857,25 +1854,66 @@ if (document.readyState === 'loading') {
                 behavior: 'smooth'
             });
         });
-        
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    e.preventDefault();
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80, // Adjust for fixed header
-                        behavior: 'smooth'
-                    });
-                }
-            });
         });
-    });
+
 </script>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const container = document.querySelector(".tech-icons-bg");
+
+  const iconsList = [
+    "fa-python",
+    "fa-js",
+    "fa-github",
+    "fa-git-alt",
+    "fa-database",
+    "fa-html5",
+    "fa-css3-alt",
+    "fa-java",
+    "fa-aws",
+    "fa-node-js"
+  ];
+
+  iconsList.forEach((iconName, index) => {
+    const iconEl = document.createElement("i");
+    iconEl.classList.add("fab", iconName);
+
+    const x = (index % 5) * 18 + Math.random() * 5;
+    const y = Math.floor(index / 5) * 40 + Math.random() * 10;
+    const delay = (Math.random() * 5).toFixed(2) + "s";
+    const duration = (10 + Math.random() * 10).toFixed(2) + "s";
+
+    iconEl.style.setProperty("--x", x);
+    iconEl.style.setProperty("--y", y);
+    iconEl.style.setProperty("--delay", delay);
+    iconEl.style.setProperty("--duration", duration);
+
+    // ✅ New: add slight random zig-zag animation
+    const zigzagX = 2 + Math.random() * 3; // amplitude in vw
+    const zigzagY = 1 + Math.random() * 2; // amplitude in vh
+    const speed = 4000 + Math.random() * 2000; // ms per cycle
+    const phase = Math.random() * Math.PI * 2;
+
+    // continuous small movement
+    let startTime = performance.now();
+    function animateZigzag(time) {
+      const t = (time - startTime) / speed + phase;
+      const offsetX = Math.sin(t) * zigzagX;
+      const offsetY = Math.sin(t * 1.5) * zigzagY;
+
+      iconEl.style.transform = `translate(calc(var(--x) * 1vw + ${offsetX}vw),
+                                     calc(var(--y) * 1vh + ${offsetY}vh)) scale(1.1)`;
+      requestAnimationFrame(animateZigzag);
+    }
+
+    requestAnimationFrame(animateZigzag);
+    container.appendChild(iconEl);
+  });
+});
+</script>
+
 {% endblock %}
 
 {% endblock %}

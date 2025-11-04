@@ -1,115 +1,123 @@
-// Main JavaScript for Ragini's Portfolio
+document.addEventListener('DOMContentLoaded', () => {
+  // Scroll Up Button
+  const scrollUpBtn = document.getElementById('scrollUpBtn');
+  if(scrollUpBtn) {
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        scrollUpBtn.style.display = 'flex';
+      } else {
+        scrollUpBtn.style.display = 'none';
+      }
+    });
+    scrollUpBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize AOS with debug mode
+  // Initialize AOS
+  if (typeof AOS !== 'undefined') {
     AOS.init({
-        duration: 1000,
-        easing: 'ease-in-out',
-        once: true,
-        mirror: true,
-        offset: 100,
-        delay: 100,
-        disable: window.innerWidth < 768,
-        startEvent: 'DOMContentLoaded'
+      duration: 1000,
+      easing: 'ease-in-out',
+      once: true,
+      mirror: true,
+      offset: 100,
+      delay: 100,
+      disable: window.innerWidth < 768,
+      startEvent: 'DOMContentLoaded'
     });
+  }
 
-    // Add smooth scrolling to all links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
-
-    // Add active class to nav links on scroll
-    const sections = document.querySelectorAll('section[id]');
-
-    function highlightNavLink() {
-        const scrollY = window.pageYOffset;
-        
-        sections.forEach(section => {
-            const sectionHeight = section.offsetHeight;
-            const sectionTop = section.offsetTop - 100;
-            const sectionId = section.getAttribute('id');
-            
-            if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
-                document.querySelector(`.nav-link[href*="${sectionId}"]`)?.classList.add('active');
-            } else {
-                document.querySelector(`.nav-link[href*="${sectionId}"]`)?.classList.remove('active');
-            }
-        });
-    }
-
-    // Initialize functions
-    function init() {
-        // Initialize any other functions here
-        
-        // Refresh AOS after dynamic content loads
-        if (typeof AOS !== 'undefined') {
-            AOS.refresh();
+  // Smooth scrolling for in-page anchors only
+  document.querySelectorAll('a').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const href = this.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        e.preventDefault();
+        const target = document.querySelector(href);
+        if(target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
-    }
-
-    // Initialize when the page loads
-    window.addEventListener('load', init);
-
-    // Update on scroll
-    window.addEventListener('scroll', highlightNavLink);
-    // Re-initialize on window resize
-    let resizeTimer;
-    window.addEventListener('resize', function() {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(function() {
-            if (typeof AOS !== 'undefined') {
-                AOS.refresh();
-            }
-        }, 500);
+      }
     });
+  });
 
-    // Progress bar animation and color handling
-    function animateProgressBars() {
-        const progressBars = document.querySelectorAll('.progress-bar');
-        progressBars.forEach(bar => {
-            // Get the target width from data-width attribute
-            const targetWidth = bar.getAttribute('data-width') + '%';
-            
-            // Reset width to 0 for animation
-            bar.style.width = '0';
-            
-            // Apply custom color if data-color is set
-            const color = bar.getAttribute('data-color');
-            if (color) {
-                bar.style.setProperty('--skill-color', color);
-            }
-            
-            // Animate the width to target
-            setTimeout(() => {
-                bar.style.width = targetWidth;
-            }, 100);
-        });
-    }
-
-    // Initialize progress bar observer
-    const progressBarObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                animateProgressBars();
-                progressBarObserver.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.1 });
-
-    // Observe all progress bars
-    document.querySelectorAll('.progress').forEach(progress => {
-        progressBarObserver.observe(progress);
+  // Highlight nav link on scroll
+  const sections = document.querySelectorAll('section[id]');
+  function highlightNavLink() {
+    const scrollY = window.pageYOffset;
+    sections.forEach(section => {
+      const sectionHeight = section.offsetHeight;
+      const sectionTop = section.offsetTop - 100;
+      const sectionId = section.getAttribute('id');
+      const activeLink = document.querySelector(`.nav-link[href*="${sectionId}"]`);
+      if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+        activeLink?.classList.add('active');
+      } else {
+        activeLink?.classList.remove('active');
+      }
     });
+  }
+  window.addEventListener('scroll', highlightNavLink);
+  highlightNavLink();
 
-    // Initial call to highlight nav link
-    highlightNavLink();
+  // Refresh AOS on load and resize
+  function refreshAOS() {
+    if (typeof AOS !== 'undefined') {
+      AOS.refresh();
+    }
+  }
+  window.addEventListener('load', refreshAOS);
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(refreshAOS, 500);
+  });
+
+  // Progress bar animation with IntersectionObserver
+  function animateProgressBars() {
+    const progressBars = document.querySelectorAll('.progress-bar');
+    progressBars.forEach(bar => {
+      const targetWidth = bar.getAttribute('data-width') + '%';
+      bar.style.width = '0';
+      const color = bar.getAttribute('data-color');
+      if(color) {
+        bar.style.setProperty('--skill-color', color);
+      }
+      setTimeout(() => {
+        bar.style.width = targetWidth;
+      }, 100);
+    });
+  }
+  const progressBarObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        animateProgressBars();
+        progressBarObserver.unobserve(entry.target);
+      }
+    });
+  }, {threshold: 0.1});
+  document.querySelectorAll('.progress').forEach(progress => {
+    progressBarObserver.observe(progress);
+  });
+
+  // Theme toggle button that reloads page on toggle
+  const toggleBtn = document.getElementById('theme-toggle');
+  if(toggleBtn){
+    function setTheme(theme) {
+      localStorage.setItem('theme', theme);
+    }
+    // On page load, apply saved or system theme
+    const savedTheme = localStorage.getItem('theme');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.setAttribute('data-theme', savedTheme || (systemPrefersDark ? 'dark' : 'light'));
+    
+    toggleBtn.addEventListener('click', () => {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const newTheme = (currentTheme === 'dark') ? 'light' : 'dark';
+      setTheme(newTheme);
+      // Reload page to apply theme globally
+      window.location.reload();
+    });
+  }
 });
