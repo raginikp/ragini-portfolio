@@ -16,6 +16,9 @@ load_dotenv()
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
 
+@app.route('/')
+def home():
+    return render_template('index.html')  # or any simple string
 
 # Initialize Redis
 redis_client = redis.Redis(host='localhost', port=6379, db=0)
@@ -74,7 +77,7 @@ PORTFOLIO_DATA ={
     'about': '''A passionate Computer Science student and full-stack developer who loves creating 
                innovative solutions and exploring new technologies. Currently pursuing my degree 
                while building amazing projects and traveling to beautiful places.''',
-    'linkedin': 'https://www.linkedin.com/in/ragini-kumari-177468257/',
+    'linkedin': 'https://www.linkedin.com/in/ragini-kumari1/',
     'github': 'https://github.com/raginikp',
     'email': 'ragini24072004@gmail.com',
     'resume': '/static/files/Ragini_Kumari_Resume.pdf',  # Add your resume file to static/files/
@@ -320,3 +323,4 @@ def health_check():
 
 if __name__ == '__main__':
     app.run(debug=True, host='127.0.0.1', port=5001)
+
