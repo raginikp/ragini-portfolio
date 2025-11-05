@@ -16,9 +16,6 @@ load_dotenv()
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
 
-@app.route('/')
-def home():
-    return render_template('index.html')  # or any simple string
 
 # Initialize Redis
 redis_client = redis.Redis(host='localhost', port=6379, db=0)
@@ -323,4 +320,5 @@ def health_check():
 
 if __name__ == '__main__':
     app.run(debug=True, host='127.0.0.1', port=5001)
+
 
